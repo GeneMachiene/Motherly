@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 
 function Header() {
   return (
@@ -20,13 +21,13 @@ function Header() {
                 <li className="p-4">+63 912 345 6789</li>
               </ul>
             </li>
-            <li><a>Login</a></li>
+            <li><NavLink to='/login'>Login</NavLink></li>
             <li><a>Sign Up</a></li>
           </ul>
         </div>
 
         {/* Logo */}
-        <a className="btn btn-ghost text-xl">
+        <a href="/" className="btn btn-ghost text-xl">
           <img src="/logo.svg" alt="Motherly Logo" className="h-9 lg:h-6"/>
         </a>
       </div>
@@ -51,8 +52,8 @@ function Header() {
 
       {/* Action buttons */}
       <div className="navbar-end hidden lg:flex">
-        <a className="btn btn-link text-purple-700">Sign Up</a>
-        <a className="btn">Login</a>
+        <a href='/signup' className="btn btn-link text-purple-700">Sign Up</a>
+        <a href='/login' className="btn">Login</a>
       </div>
     </div>
   )

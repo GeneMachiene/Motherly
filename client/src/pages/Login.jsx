@@ -21,11 +21,14 @@ function Login() {
             </Hidden>
             <Col lg={5} xs={12} sm={12} style={{display:'flex', justifyContent:'center'}}>
               <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                <form className="card-body">
+                <form className="card-body prose prose-lg">
                   <Visible xs sm md>
                     <a href="/" className='flex place-content-center'>
                       <img src="/logo.svg" alt="Motherly Logo" className="h-9"/>
                     </a>
+                  </Visible>
+                  <Visible lg xl xxl>
+                    <h2>Login</h2>
                   </Visible>
                   <div className="form-control">
                     <label className="label">
@@ -39,7 +42,7 @@ function Login() {
                     </label>
                     <input type="password" placeholder="password" className="input input-bordered" required />
                     <label className="label">
-                      <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                      <a href="#" className="label-text-alt link link-hover">No account? Create one here</a>
                     </label>
                   </div>
                   <div className="form-control mt-6">

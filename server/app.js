@@ -1,30 +1,28 @@
-require('dotenv').config()
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-const express = require('express');
-const mongoose = require('mongoose');
+const indexRouter = require('./routes/index');
+const testRouter = require('./routes/test');
 
 const app = express();
-const port = process.env.PORT;
 
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 
-// middleware
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(process.env.MONGO_URI);
+}
+
+app.use(logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', indexRouter);
+app.use('/test', testRouter);
 
-// routes
-app.get('/', (req, res) =>{
-  res.json({mssg: 'welcome to Motherly!'});
-})
-
-// connect to db
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    
-    // listener
-    app.listen(port, ()=>{
-      console.log(`Listening on port ${port}`);
-      console.log(`Connected to DB`);
-    })
-
-  })
-  .catch(err => console.log(err));
+module.exports = app;

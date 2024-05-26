@@ -37,59 +37,61 @@ function Signup() {
               <Visible lg xl xxl>
                 <h2>Sign up</h2>
               </Visible>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Last Name</span>
-                </label>
-                <input type="text" placeholder="Last Name" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">First Name</span>
-                </label>
-                <input type="text" placeholder="First Name" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Middle Name</span>
-                </label>
-                <input type="text" placeholder="Middle Name" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Birthday</span>
-                </label>
-                <input type="date" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Address</span>
-                </label>
-                <input type="text" placeholder="Block Number, Street" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Municipality/City</span>
-                </label>
-                <Select options={options} />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Country</span>
-                </label>
-                <Select options={options} />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Status</span>
-                </label>
-                <Select options={options} />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Sex</span>
-                </label>
-                <Select options={options} />
+              <div className='max-h-80 overflow-auto'>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Last Name</span>
+                  </label>
+                  <input type="text" placeholder="Last Name" className="input input-bordered" required />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">First Name</span>
+                  </label>
+                  <input type="text" placeholder="First Name" className="input input-bordered" required />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Middle Name</span>
+                  </label>
+                  <input type="text" placeholder="Middle Name" className="input input-bordered" required />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Birthday</span>
+                  </label>
+                  <input type="date" className="input input-bordered" required />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Address</span>
+                  </label>
+                  <input type="text" placeholder="Block Number, Street" className="input input-bordered" required />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Municipality/City</span>
+                  </label>
+                  <Select options={options} />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Country</span>
+                  </label>
+                  <Select options={options} />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Status</span>
+                  </label>
+                  <Select options={options} />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Sex</span>
+                  </label>
+                  <Select options={options} />
+                </div>
               </div>
 
               <label className="label">

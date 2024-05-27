@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom"
 
 function Header() {
   return (
@@ -21,8 +20,8 @@ function Header() {
                 <li className="p-4">+63 912 345 6789</li>
               </ul>
             </li>
-            <li><NavLink to='/login'>Login</NavLink></li>
-            <li><a>Sign Up</a></li>
+            <li><a href='/login'>Login</a></li>
+            <li><a href='/signup'>Sign Up</a></li>
           </ul>
         </div>
 

@@ -37,7 +37,8 @@ function Signup() {
               <Visible lg xl xxl>
                 <h2>Sign up</h2>
               </Visible>
-              <div className='max-h-80 overflow-auto'>
+
+              <div className='lg:max-h-80 md:max-h-80 max-h-96 overflow-auto px-4'>
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Last Name</span>

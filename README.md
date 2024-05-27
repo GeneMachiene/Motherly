@@ -25,7 +25,7 @@ Make sure you have the following installed:
 1. **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/your-username/motherly.git](https://github.com/GeneMachiene/Motherly.git)
+    git clone https://github.com/GeneMachiene/Motherly.git
     cd motherly
     ```
 
@@ -43,11 +43,12 @@ Make sure you have the following installed:
     npm install
     ```
 
-4. **Setup your .env file:**
+4. **Setup your .env file on the server side:**
 
     ```
     PORT = 3000
     MONGO_URI = ...
+    SECRET = ...
     ```
 
 ### Running the Application
@@ -62,11 +63,11 @@ Make sure you have the following installed:
 2. **Start the server:**
 
     ```bash
-    cd ../server
-    npm run dev
+    cd server
+    npm run devstart
     ```
 
-The application should now be running, and you can access it at `http://localhost:3000` for the client interface.
+The application should now be running, and you can access it at `http://localhost:5173` for the client interface.
 
 
 ## Acknowledgements

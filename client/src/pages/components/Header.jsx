@@ -1,5 +1,15 @@
+import { useLogout } from "../../hooks/useLogout"
+import { useAuthContext } from "../../hooks/useAuthContext"
+import { NavLink } from "react-router-dom"
 
 function Header() {
+  const { logout } = useLogout()
+  const { user } = useAuthContext()
+
+  const handleLogout = () =>{
+    logout()
+  }
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -20,8 +30,14 @@ function Header() {
                 <li className="p-4">+63 912 345 6789</li>
               </ul>
             </li>
-            <li><a href='/login'>Login</a></li>
-            <li><a href='/signup'>Sign Up</a></li>
+            {user ? <>
+              <li><a onClick={handleLogout}>Logout</a></li>
+              <li><NavLink to={'/profile'}>{user.email}</NavLink></li></>
+            :
+            <>
+              <li><a href='/login'>Login</a></li>
+              <li><a href='/signup'>Sign Up</a></li>
+            </>}
           </ul>
         </div>
 
@@ -51,8 +67,18 @@ function Header() {
 
       {/* Action buttons */}
       <div className="navbar-end hidden lg:flex">
-        <a href='/signup' className="btn btn-link text-purple-700">Sign Up</a>
-        <a href='/login' className="btn">Login</a>
+        {user?
+          <><a onClick={handleLogout} className="btn btn-link text-purple-700">Logout</a>
+          <NavLink to={"/profile"} className="btn btn-ghost">
+            <div className="avatar">
+              <div className="w-8 rounded-full">
+                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Tailwind-CSS-Avatar-component" />
+              </div>
+            </div>
+            {user.email}
+          </NavLink></>:
+          <><a href='/signup' className="btn btn-link text-purple-700">Sign Up</a>
+          <a href='/login' className="btn">Login</a></>}
       </div>
     </div>
   )

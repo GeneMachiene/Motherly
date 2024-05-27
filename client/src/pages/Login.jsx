@@ -28,7 +28,7 @@ function Login() {
                     <img src="/logo.svg" alt="Motherly Logo" className="h-9"/>
                   </a>
                   <h1>Start tracking</h1>
-                  <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                  <p className="py-6">Welcome to Motherly, the ultimate companion app for moms to effortlessly track and manage their children's health, from baby book milestones to recent checkups and medical records, all in one convenient place.</p>
                 </div>
               </Col>
             </Hidden>

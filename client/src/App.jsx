@@ -4,6 +4,7 @@ import Header from './pages/components/Header'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Profile from './pages/Profile'
+import Register from './pages/Register'
 
 function App() {
   const currentURI = window.location.href.split('/').at(-1);
@@ -24,7 +25,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Landing />}/>
             <Route path='/login' element={<Login />}/>
-            <Route path='/signup' element={<Signup />}/>
+            <Route path='/signup' element={<Register />}/>
             <Route path='/profile' element={<Profile />}/>
           </Routes>
         </div>

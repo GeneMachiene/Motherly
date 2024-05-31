@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "SET DEBUG=server:* npm run devstart"
+    "serverstart": "SET DEBUG=server:* & npm run devstart"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

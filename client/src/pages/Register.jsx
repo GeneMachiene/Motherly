@@ -117,6 +117,23 @@ function Register() {
       </Row>
 
       <Divider Text={"II. Family"} />
+
+      <SectionLabel Text={"15. Spouse's Name"} Hint={"Pangalan ng Asawa"}/>
+      <Row>
+        <Col md={3}>
+          <input className='input bg-base-300 w-full mb-3'></input>
+        </Col>
+        <Col md={3}>
+          <input className='input bg-base-300 w-full mb-3'></input>
+        </Col>
+        <Col md={3}>
+          <input className='input bg-base-300 w-full mb-3'></input>
+        </Col>
+        <Col md={3}>
+          <input className='input bg-base-300 w-full mb-3'></input>
+        </Col>
+      </Row>
+
       <Divider Text={"III. Education"} />
     </Container>
 

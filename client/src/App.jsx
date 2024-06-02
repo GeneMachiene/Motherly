@@ -22,17 +22,25 @@ function App() {
         }
 
         <div className={ inAuth ? '' : "p-0 xl:p-7"}>
-          <Routes>
-            <Route path='/' element={<Landing />}/>
-            <Route path='/login' element={<Login />}/>
-            <Route path='/signup' element={<Register />}/>
-            <Route path='/profile' element={<Profile />}/>
-          </Routes>
+            <Routes>
+              <Route path='/' element={<Landing />}/>
+              <Route path='/login' element={<Login />}/>
+              <Route path='/signup' element={<Register />}/>
+              <Route path='/profile' element={<Profile />}/>
+            </Routes>
         </div>
       </div>
       </BrowserRouter>
     </>
   )
 }
+
+
+function AppRoutes() {
+  return (
+    <div>App</div>
+  )
+}
+
 
 export default App

@@ -104,24 +104,26 @@ userSchema.statics.signup = async function(user) {
 }
 
 // static login method
-userSchema.statics.login = async function(email, password) {
-  if (!email || !password){
+userSchema.statics.login = async function(user) {
+  if ((!user.email && !user.contact_number) || !user.password){
     throw Error('All fields must be filled');
   }
 
-  const user = await this.findOne( {email} );
+  const userResult = await (user.email ?
+    this.findOne({ email: user.email }) :
+    this.findOne({ contact_number: user.contact_number }));
 
-  if (!user) {
-    throw Error('Incorrect email');
+  if (!userResult) {
+    throw Error('Incorrect email or contact number');
   }
 
-  const match = await bcrypt.compare(password, user.password);
+  const match = await bcrypt.compare(user.password, userResult.password);
 
   if(!match){
     throw Error('Incorrect password');
   }
 
-  return user
+  return userResult
 }
 
 module.exports = mongoose.model('user', userSchema);

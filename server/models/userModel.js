@@ -10,9 +10,9 @@ const userSchema = new Schema({
   contact_number: { type: String },
   personal_information: {
     name: {
-      last_name: { type: String, maxlength: 100, required: true },
-      first_name: { type: String, maxlength: 100, required: true },
-      middle_name: { type: String, maxlength: 100, required: true },
+      last_name: { type: String, required: true, maxlength: 100 },
+      first_name: { type: String, required: true, maxlength: 100 },
+      middle_name: { type: String, required: true, maxlength: 100 },
       suffix: { type: String, maxlength: 20 }
     },
     address: {
@@ -21,7 +21,7 @@ const userSchema = new Schema({
       city: { type: String, maxlength: 100 },
       district: { type: String, maxlength: 100 },
       barangay: { type: String, maxlength: 100 },
-      residence: { type: String, maxlength: 300, required: true },
+      residence: { type: String, required: true, maxlength: 300 },
       street: { type: String, maxlength: 100 }
     },
     birthdate: { type: Date, required: true },
@@ -75,36 +75,32 @@ const userSchema = new Schema({
   }
 });
 
-
 // static signup method
-userSchema.statics.signup = async function(email, password) {
+userSchema.statics.signup = async function(user) {
 
   // validation
-  if (!email || !password){
+  if (!user.email || !user.password) {
     throw Error('All fields must be filled');
   }
-  if (!validator.isEmail(email)){
+  if (!validator.isEmail(user.email)) {
     throw Error('Email is not valid');
   }
-  if (!validator.isStrongPassword(password)){
+  if (!validator.isStrongPassword(user.password)) {
     throw Error('Password not strong enough');
   }
 
-  const exists = await this.findOne( {email} );
+  const exists = await this.findOne({ email: user.email });
 
   if (exists) {
     throw Error('Email already in use');
   }
 
   const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
+  user.password = await bcrypt.hash(user.password, salt);
 
-  const user = await this.create({
-    email,
-    password: hash
-  })
+  const userOutput = await this.create(user);
 
-  return user
+  return userOutput;
 }
 
 // static login method

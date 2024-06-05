@@ -3,11 +3,23 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { AuthContextProvider } from './context/AuthContext.jsx'
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById("root");
+const root = ReactDOM.createRoot(rootElement);
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
+
+root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <App />
+      <CacheProvider value={cache}>
+        <App />
+      </CacheProvider>
     </AuthContextProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

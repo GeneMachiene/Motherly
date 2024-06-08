@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
-import { Button, TextField } from '@mui/material';
-import AdjustIcon from '@mui/icons-material/Adjust';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import { 
   Container, Row, Col,
@@ -97,8 +96,8 @@ function Login() {
                       disabled={isLoading}
                       type='submit'
                     >
-                      <span className='flex items-center'>
-                        {isLoading ? <DataUsageIcon className='animate-spin'/> : ""}
+                      <span className='flex items-center gap-3 transition-all'>
+                        {isLoading ? <CircularProgress color='inherit' size={20} /> : ""}
                         Login
                       </span>
                     </Button>

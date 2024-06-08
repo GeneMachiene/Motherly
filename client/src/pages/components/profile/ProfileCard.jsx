@@ -1,24 +1,33 @@
+import { Avatar, Chip, Divider } from "@mui/material"
 
 function ProfileCard({image, name, role, bio, child = false}) {
   
 
   return (
-    <div className="card card-compact w-full bg-base-100 shadow-xl">
+    <div className="box-border flex flex-col w-full bg-slate-50 shadow-lg mb-3 p-3 rounded-md gap-3">
 
-      <div className="card-body flex-row gap-6 items-center">
-        <div className="avatar">
-          <div className="w-24 rounded-full">
-            <img src={image} />
-          </div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Avatar 
+            src={image}
+            sx={{ width: 56, height: 56 }}
+          />
+          <h2 className="m-0">{name}</h2>
         </div>
-        <div>
-          <div className="flex xl:flex-row xl:gap-3 xl:items-center gap-0 flex-col items-start">
-            <h2 className="card-title whitespace-nowrap">{name}</h2>
-            <div className={child ? "badge badge-accent" : "badge badge-primary"}>{role}</div>
-          </div>
-          {bio}
-        </div>
+        <Chip label={role} color={child? "secondary":"primary"} />
       </div>
+      
+      {bio ? 
+        <>
+          <Divider/>
+          <div className="border-0 border-solid border-l-2 border-blue-500 pl-3">
+            {bio}
+          </div>
+        </>
+         : 
+        <></>
+      }
+
     </div>
   )
 }

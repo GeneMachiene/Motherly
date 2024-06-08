@@ -1,6 +1,17 @@
+import { useState } from "react";
 import { useLogout } from "../../hooks/useLogout"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { NavLink } from "react-router-dom"
+
+import { Avatar,Chip,Divider,Snackbar } from "@mui/material";
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import MenuIcon from '@mui/icons-material/Menu';
 
 function Header() {
   const { logout } = useLogout()
@@ -10,78 +21,149 @@ function Header() {
     logout()
   }
 
-  return (
-    <div className="navbar bg-base-100">
-      <div className="navbar-start">
+  const [anchorContact, setAnchorContact] = useState(null);
+  const [anchorMenu, setAnchorMenu] = useState(null);
+  const [snackOpen, setSnackOpen] = useState(false);
 
-        {/* Dropdown Menu when size sm */}
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-          </div>
-          <ul tabIndex={0} className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li><a>Home</a></li>
-            <li><a>About Us</a></li>
-            <li><a>FAQ’s</a></li>
-            <li>
-              <a>Contact Us</a>
-              <ul className="p-2">
-                <li><a>Email</a></li>
-                <li className="p-4">+63 912 345 6789</li>
-              </ul>
-            </li>
-            {user ? <>
-              <li><a onClick={handleLogout}>Logout</a></li>
-              <li><NavLink to={'/profile'}>{user.email}</NavLink></li></>
-            :
-            <>
-              <li><a href='/login'>Login</a></li>
-              <li><a href='/signup'>Sign Up</a></li>
-            </>}
-          </ul>
-        </div>
+  const contactOpen = Boolean(anchorContact);
+  const menuOpen = Boolean(anchorMenu);
 
-        {/* Logo */}
-        <a href="/" className="btn btn-ghost text-xl">
-          <img src="/logo.svg" alt="Motherly Logo" className="h-9 lg:h-6"/>
-        </a>
+  const copyClick = () => {
+    setSnackOpen(true);
+    navigator.clipboard.writeText("09123456789");
+  }
+
+  const openContact = (event) => {
+    setAnchorContact(event.currentTarget);
+  };
+  const openMenu = (event) => {
+    setAnchorMenu(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorContact(null);
+    setAnchorMenu(null);
+  };
+
+  const snackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
+
+
+  return(
+    <div className="flex h-full flex-row items-center justify-between bg-slate-50 px-5 md:px-28 lg:px-36 xl:px-48">
+      <NavLink to={"/"} >
+        <img src="/logo.svg" alt="Motherly Logo" className="h-6"/>
+      </NavLink>
+
+      <div className="hidden lg:flex xl:flex">
+        <Button>Home</Button>
+        <Button>About Us</Button>
+        <Button>FAQ&apos;s</Button>
+        <Button
+          id="basic-button"
+          aria-controls={contactOpen ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={contactOpen ? 'true' : undefined}
+          onClick={openContact}
+        >
+          Contact Us {contactOpen ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorContact}
+          open={contactOpen}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleClose}>Email</MenuItem>
+          <MenuItem onClick={copyClick}>Phone: +63 912 345 6789</MenuItem>
+        </Menu>
       </div>
 
-      {/* Menu items when size lg */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li><a>Home</a></li>
-          <li><a>About Us</a></li>
-          <li><a>FAQ’s</a></li>
-          <li>
-            <details>
-              <summary>Contact Us</summary>
-              <ul className="p-2">
-                <li><a>Email</a></li>
-                <li className="p-4">Phone: +63 912 345 6789</li>
-              </ul>
-            </details>
-          </li>
-        </ul>
+      <div className="hidden lg:flex xl:flex gap-3 items-center">
+        {user ? 
+          <>
+            <NavLink to={"/profile"}>
+              <Chip 
+                avatar={
+                  <Avatar 
+                    sx={{ width: 26, height: 26 }}
+                    alt={user.email}
+                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" 
+                  />
+                }
+                label={user.email}
+                variant="outlined"
+              />              
+            </NavLink>
+            <Button onClick={handleLogout} variant="text">Logout</Button>
+          </>
+          :
+          <>
+            <Button onClick={()=>(location.href = "/signup")} variant="text">Signup</Button>
+            <Button onClick={()=>(location.href = "/login")} variant="contained">Login</Button>
+          </>
+        }
       </div>
 
-      {/* Action buttons */}
-      <div className="navbar-end hidden lg:flex">
-        {user?
-          <><a onClick={handleLogout} className="btn btn-link text-purple-700">Logout</a>
-          <NavLink to={"/profile"} className="btn btn-ghost">
-            <div className="avatar">
-              <div className="w-8 rounded-full">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Tailwind-CSS-Avatar-component" />
-              </div>
-            </div>
-            {user.email}
-          </NavLink></>:
-          <><a href='/signup' className="btn btn-link text-purple-700">Sign Up</a>
-          <a href='/login' className="btn">Login</a></>}
+      <div className="flex items-center lg:hidden xl:hidden gap-3">
+        {user ?
+          <NavLink to={"/profile"}>
+            <Avatar 
+              sx={{ width: 26, height: 26 }}  
+              alt={user.email}
+              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          </NavLink>
+          :
+          <></>
+        }
+
+        <IconButton
+          aria-controls={contactOpen ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={contactOpen ? 'true' : undefined}
+          aria-label="Open menu"
+          color="primary"
+          onClick={openMenu}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorMenu}
+          open={menuOpen}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem>Home</MenuItem>
+          <MenuItem>About Us</MenuItem>
+          <MenuItem>FAQ&apos;s</MenuItem>
+          <MenuItem>Contact Us</MenuItem>
+          <MenuItem>&emsp;Email</MenuItem>
+          <MenuItem onClick={copyClick}>&emsp;Phone: +63 912 345 6789</MenuItem>
+          <Divider/>
+          <MenuItem onClick={()=>(location.href = "/signup")}>Signup</MenuItem>
+          <MenuItem onClick={()=>(location.href = "/login")}>Login</MenuItem>
+        </Menu>
       </div>
+
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={3000}
+        onClose={snackClose}
+        message="Text Copied to clipboard"
+      />
     </div>
-  )
+  )  
 }
 
 export default Header

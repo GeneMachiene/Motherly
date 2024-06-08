@@ -29,6 +29,8 @@ export const useLogin = () => {
       dispatch({type: 'LOGIN', payload: json})
 
       setIsLoading(false)
+
+      window.location.href = "/"
     }
   }
 

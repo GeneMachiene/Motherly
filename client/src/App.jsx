@@ -21,7 +21,7 @@ function App() {
         </div>
       }
 
-        <div className={inAuth ? "row-span-12" : "overflow-y-auto row-span-11 bg-gray-100"}>
+        <div className={inAuth ? "row-span-12 min-w-0" : "overflow-y-auto row-span-11 bg-gray-100"}>
           <Routes>
             <Route path='/' element={<Landing />}/>
             <Route path='/login' element={<Login />}/>

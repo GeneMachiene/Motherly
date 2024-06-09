@@ -1,16 +1,24 @@
-import { Divider, Modal, Fab, TextField, Box, Typography, FormControl, InputLabel, Select, MenuItem, FormHelperText, Button } from "@mui/material";
+import {
+  Divider, Modal, Fab,
+  TextField, Box, Typography,
+  FormControl, InputLabel,
+  Select, MenuItem, FormHelperText,
+  Button, styled, IconButton,
+  Alert
+} from "@mui/material";
 import ProfileCard from "./components/profile/ProfileCard"
 import AddIcon from '@mui/icons-material/Add';
 import { 
   Container, Row, Col,
  } from 'react-grid-system';
 import { useState } from "react";
-import { display, maxWidth, minWidth } from "@mui/system";
 
 
 function Profile() {
   const [addOpen, setAddOpen] = useState(false);
   const [relationship, setRelationship] = useState('');
+  const [image, setImage] = useState(null)
+  const [error, setError] = useState()
 
   const selectRelationship = (event) => {
     setRelationship(event.target.value);
@@ -24,6 +32,22 @@ function Profile() {
     setAddOpen(false);
   }
 
+  function selectImage(event) {
+    const image = event.target.files[0];
+    const  fileType = image['type'];
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+
+    if (!validImageTypes.includes(fileType)) {
+      setError("Invalid file type. Use JPEG or PNG only.")
+      return setTimeout(()=>(
+        setError(null)
+      ), 5000)
+    }
+
+    setImage(URL.createObjectURL(image))
+  }
+
+  // MODAL STYLING =====================================
   const style = {
     position: 'absolute',
     top: '50%',
@@ -36,11 +60,24 @@ function Profile() {
     boxShadow: 24,
     p: 4,
     minWidth: 250,
+    alignItems: 'center'
   };
+
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+  // MODAL STYLING =====================================
 
   return (
     <>
-      
       <Modal
         open={addOpen}
         onClose={handleClose}
@@ -50,7 +87,38 @@ function Profile() {
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">Add Family Member</Typography>
 
-          <TextField margin="normal" label="Name" />
+          <IconButton
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            sx={{
+              width:100,
+              height:100,
+              backgroundColor:"whitesmoke",
+              opacity:0.8,
+              mt:3,
+            }}
+          >
+            <AddIcon />
+            <img
+              src={image} 
+              style={{ 
+                visibility: image ? "visible":"hidden",
+                width:100,
+                height:100,
+                objectFit:"cover",
+                position:"absolute",
+                zIndex:-1,
+                borderRadius:50,
+              }}
+            />
+            <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
+          </IconButton>
+          <FormHelperText>Upload an avatar</FormHelperText>
+
+          <TextField fullWidth margin="normal" label="Name" />
+
           <FormControl fullWidth sx={{mt:1}}>
             <InputLabel id="helper-text">Relationship</InputLabel>
             <Select
@@ -66,7 +134,10 @@ function Profile() {
             </Select>
             <FormHelperText>Relationship to Child/Family Member</FormHelperText>
           </FormControl>
-          <Button variant="contained" sx={{mt:5}}>Add</Button>
+
+          <Button fullWidth variant="contained" sx={{mt:5}}>Add</Button>
+          
+          {error ? <Alert severity="error">{error}</Alert> : <></>}
         </Box>
       </Modal>
       

@@ -8,6 +8,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const testRouter = require('./routes/test');
 const userRoutes = require('./routes/user');
+const childRoutes = require('./routes/child');
 
 const app = express();
 
@@ -29,5 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/test', testRouter);
 app.use('/user', userRoutes);
+app.use('/child', childRoutes);
 
 module.exports = app;

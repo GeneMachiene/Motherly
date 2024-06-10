@@ -77,13 +77,13 @@ function Register() {
           <Input name='last_name' label="Lastname (Apelyido)" required />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" required />
+          <Input name='first_name' label="Firstname (Pangalan)" required />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" required />
+          <Input name='middle_name' label="Middlename (Gitnang Pangalan)" required />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" required />
+          <Input name='Suffix' label="Suffix/put - if no suffix"/>
         </Col>
       </Row>
 
@@ -93,26 +93,26 @@ function Register() {
           <AsyncSelect placeholder='All Regions' className='mb-6'/>
         </Col>
         <Col md={4}>
-          <AsyncSelect placeholder='All Regions' className='mb-6'/>
+          <AsyncSelect placeholder='All Provinces' className='mb-6'/>
         </Col>
         <Col md={4}>
-          <AsyncSelect placeholder='All Regions' className='mb-6'/>
+          <AsyncSelect placeholder='All Cities/Municipalities' className='mb-6'/>
         </Col>
       </Row>
       <Row>
         <Col md={4}>
-          <AsyncSelect placeholder='All Regions' className='mb-6'/>
+          <AsyncSelect placeholder='All Districts' className='mb-6'/>
         </Col>
         <Col md={8}>
-          <AsyncSelect placeholder='All Regions' className='mb-6'/>
+          <AsyncSelect placeholder='All Barangays' className='mb-6'/>
         </Col>
       </Row>
       <Row className='mb-2'>
         <Col md={6}>
-          <Input name='last_name' label="Lastname (Apelyido)" required />
+          <Input name='Residence' label="Residence (House No./Block/Lot)" required />
         </Col>
         <Col md={6}>
-          <Input name='last_name' label="Lastname (Apelyido)" required />
+          <Input name='Street' label="Street (Zone/Purok/Sitio) - Not required" />
         </Col>
       </Row>
     
@@ -120,88 +120,88 @@ function Register() {
         <Col md={3}>
           <SectionLabel Text={"3. Birthdate"} Hint={"Birthday"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Birth_date' label='Birth Date' required /></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"Age "} Hint={"Auto Compute"}/>
+          <SectionLabel Text={"Age "} Hint={"Edad"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Age' label='Age'  /></Col>
           </Row>
         </Col>
         <Col md={3}>
           <SectionLabel Text={"4. Marital Status"} Hint={"Status"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Marital_status' label='Marital Status'  /></Col>
           </Row>
         </Col>
         <Col md={3}>
           <SectionLabel Text={"5. Sex"} Hint={"@ Birth"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Sex' label='Sex'  /></Col>
           </Row>
         </Col>
       </Row>
 
       <Row>
         <Col md={6}>
-          <SectionLabel Text={"3. Birthdate"} Hint={"Birthday"}/>
+          <SectionLabel Text={"6. Place of Birth"} Hint={"Saan Pinanganak"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Place_birth' label='Place of Birth' required /></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"Age "} Hint={"Auto Compute"}/>
+          <SectionLabel Text={"7. Contact No. 1 "} />
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Contact_1' label='Contact No. 1'  /></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"4. Marital Status"} Hint={"Status"}/>
+          <SectionLabel Text={"8. Contact No. 2"} />
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Contact_2' label='Contact No. 2'  /></Col>
           </Row>
         </Col>
       </Row>
       
       <Row>
         <Col md={6}>
-          <SectionLabel Text={"3. Birthdate"} Hint={"Birthday"}/>
+          <SectionLabel Text={"9. Email Address"} />
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Email_add' label='Email Address'  /></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"Age "} Hint={"Auto Compute"}/>
+          <SectionLabel Text={"10. Messenger Name "} />
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Messenger_name' label='Messenger Name'  /></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"4. Marital Status"} Hint={"Status"}/>
+          <SectionLabel Text={"11. Religion"} Hint={"Relihiyon"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Religion' label='Religion'  /></Col>
           </Row>
         </Col>
       </Row>
 
       <Row className='mb-2'>
         <Col md={6}>
-          <SectionLabel Text={"3. Birthdate"} Hint={"Birthday"}/>
+          <SectionLabel Text={"12. Language Spoken"} Hint={"Wikang sinasalita"}/>
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='Language_spoken' label='Language Spoken'/></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"Age "} Hint={"Auto Compute"}/>
+          <SectionLabel Text={"13. TIN"} />
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='TIN' label='TIN'/></Col>
           </Row>
         </Col>
         <Col md={3}>
-          <SectionLabel Text={"4. Marital Status"} Hint={"Status"}/>
+          <SectionLabel Text={"14. GSIS/SSS No."} />
           <Row>
-            <Col><Input name='' label='' required /></Col>
+            <Col><Input name='GSIS_SSS' label='GSIS/SSS'/></Col>
           </Row>
         </Col>
       </Row>
@@ -214,62 +214,62 @@ function Register() {
           <Input name='last_name' label="Lastname (Apelyido)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='first_name' label="Firstname (Unang Pangalan)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='middle_name' label="Middlename (Gitnang Pangalan)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='suffix' label="Suffix" />
         </Col>
       </Row>
 
-      <SectionLabel Text={"16. Fathers's Name"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"16. Fathers's Name"} Hint={"Pangalan ng Ama"}/>
       <Row>
         <Col md={3}>
           <Input name='last_name' label="Lastname (Apelyido)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='first_name' label="Firstname (Unang Pangalan)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='middle_name' label="Middlename (Gitnang Pangalan)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='suffix' label="Suffix" />
         </Col>
       </Row>
 
-      <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"17. Mother's Name"} Hint={"Pangalan ng Ina"}/>
       <Row className='mb-2'>
         <Col md={3}>
           <Input name='last_name' label="Lastname (Apelyido)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='first_name' label="Firstname (Unang Pangalan)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='middle_name' label="Middlename (Gitnang Pangalan)" />
         </Col>
         <Col md={3}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='suffix' label="Suffix" />
         </Col>
       </Row>
 
 
       <Divider Text={"III. Education"} />
 
-      <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"18. Highest Educational Attainment"} Hint={"(Elementary/High school/Vocational course/College/Postgraduate)"}/>
       <Row>
         <Col md={12}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='educational_attainment' label="Highest Educational Attainment" />
         </Col>
       </Row>
 
-      <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"19. Technical Skills"} Hint={"Teknikal na kakayahan"}/>
       <Row className='mb-2'>
         <Col md={12}>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <Input name='tech_skills' label="Technical Skills" />
         </Col>
       </Row>
 
@@ -277,12 +277,12 @@ function Register() {
       
       <Row>
         <Col md={6}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"20. Source of Income & Assistance"} Hint={"(E.g.-Pension/Investments/Government Aid,Scholarships/etc.)"}/>
+          <Input name='source_incom' label="Source of Income" />
         </Col>
         <Col md={6}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"21. Monthly Income"} Hint={"Buwanang kita"}/>
+          <Input name='monthly_income' label="Monthly Income" />
         </Col>
       </Row>
 
@@ -290,38 +290,38 @@ function Register() {
       
       <Row>
         <Col md={4}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"22. Medical Concern"} />
+          <Input name='med_concern' label="Medical Concern" />
         </Col>
         <Col md={4}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"23. Dental Concern"} />
+          <Input name='dent_concern' label="Dental Concern" />
         </Col>
         <Col md={4}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"24. Social/Emotional"} />
+          <Input name='soc_emotional' label="Social/Emotional" />
         </Col>
       </Row>
 
       <Row className='mb-2'>
         <Col md={4}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"25. Health Problems / Ailment"} />
+          <Input name='health_probs' label="Health Problems" />
         </Col>
         <Col md={4}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"26. Visual / Hearing Condition"} />
+          <Input name='vis_hear' label="Visual/Hearing" />
         </Col>
         <Col md={4}>
-          <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
-          <Input name='last_name' label="Lastname (Apelyido)" />
+          <SectionLabel Text={"27. Area of Difficulty"} />
+          <Input name='area_dif' label="Area of Difficulty" />
         </Col>
       </Row>
       
       <Divider Text={"VI. ID & Photo Attachment"} />
       <Row className='mb-2'>
         <Col md={6}>
-          <SectionLabel Text={"16. ID photo"} Hint={"Submit a photo of your ID"}/>
+          <SectionLabel Text={"28. ID photo"} Hint={"Submit a photo of your ID"}/>
           <IconButton 
             component="label"
             role={undefined}
@@ -339,7 +339,7 @@ function Register() {
           </div>
         </Col>
         <Col md={6}>
-          <SectionLabel Text={"16. Photo Attachment"} Hint={"Submit a selfie of you holding the ID"}/>
+          <SectionLabel Text={"29. Photo Attachment"} Hint={"Submit a selfie of you holding the ID"}/>
           <IconButton 
             component="label"
             role={undefined}
@@ -355,30 +355,30 @@ function Register() {
 
       <Divider Text={"VII. Email / Contact and Password"} />
 
-      <SectionLabel Text={"16. Email"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"30. Email"} />
       <Row>
         <Col md={12}>
-          <Input name='last_name' label="Lastname (Apelyido)" required/>
+          <Input name='email' label="Email" required/>
         </Col>
       </Row>
 
-      <SectionLabel Text={"16. Contact Number"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"31. Contact Number"}/>
       <Row>
         <Col md={12}>
-          <Input name='last_name' label="Lastname (Apelyido)" required/>
+          <Input name='contact_num' label="Contact Number" required/>
         </Col>
       </Row>
 
-      <SectionLabel Text={"16. Password"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"32. Password"}/>
       <Row className='mb-2'>
         <Col md={12}>
-          <Input name='last_name' label="Lastname (Apelyido)" required/>
+          <Input name='pass' label="Password" required/>
         </Col>
       </Row>
 
       <Divider Text={"VIII. Confirmation to allow the storage and use of my personal data"} />
       
-      <SectionLabel Text={"16. Mother's Name"} Hint={"Pangalan"}/>
+      <SectionLabel Text={"33. Mother's Name"} Hint={"Pangalan"}/>
       <Row>
         <Col>
           <FormGroup>

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const childSchema = new Schema({
+  image: { type: String },
   name: { type: String, required: true  },
   relationship: { type: String, required: true, enum: ["Daughter", "Son", "Partner"] },
 });

@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const testRouter = require('./routes/test');
 const userRoutes = require('./routes/user');
 const childRoutes = require('./routes/child');
+const apiRoutes = require('./routes/api');
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use('/', indexRouter);
 app.use('/test', testRouter);
 app.use('/user', userRoutes);
 app.use('/child', childRoutes);
+app.use('/api', apiRoutes)
 
 module.exports = app;

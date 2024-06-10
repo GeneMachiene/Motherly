@@ -158,7 +158,7 @@ function Profile() {
             </div>
             <div className="card w-full gap-y-7">
               <ProfileCard 
-                image={"https://img.freepik.com/free-photo/portrait-american-woman_53876-148185.jpg"}
+                image={"localhost:3000/uploads/file-1718009790380-32139975.png"}
                 name={"Mary Stewart"}
                 role={"Mother"}
                 bio={"Happy mother of 3 beautiful children. I work a part time job and love cooking and cleaning as a hobby."}

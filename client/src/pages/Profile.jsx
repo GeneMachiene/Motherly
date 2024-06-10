@@ -11,14 +11,28 @@ import AddIcon from '@mui/icons-material/Add';
 import { 
   Container, Row, Col,
  } from 'react-grid-system';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function Profile() {
   const [addOpen, setAddOpen] = useState(false);
   const [relationship, setRelationship] = useState('');
+  const [name, setName] = useState('')
   const [image, setImage] = useState(null)
   const [error, setError] = useState()
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      const response = await fetch(`${import.meta.env.VITE_SERVER}/child/all`)
+      const json = await response.json()
+      
+      if (response.ok){
+        setData(json)
+      }
+    }
+    fetchdata()
+  }, [])
 
   const selectRelationship = (event) => {
     setRelationship(event.target.value);
@@ -30,6 +44,46 @@ function Profile() {
 
   const handleClose = () => {
     setAddOpen(false);
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()    
+    
+    const formData = new FormData();
+    formData.append('file', image);
+
+      const imgResponse = await fetch(`${import.meta.env.VITE_SERVER}/api/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!imgResponse.ok) {
+        const errorText = await imgResponse.text();
+        throw new Error(`Error: ${imgResponse.status} - ${errorText}`);
+      }
+
+      const result = await imgResponse.json();
+      
+      const child = {"image":result, name, relationship}
+
+      const response = await fetch(`${import.meta.env.VITE_SERVER}/child/create`, {
+        method: 'POST',
+        body: JSON.stringify(child),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const json = await response.json()
+
+      if(!response.ok) {
+        console.log(json.error)
+      }
+
+      if(response.ok) {
+        console.log('Child added!')
+        window.location.reload()
+      }
   }
 
   function selectImage(event) {
@@ -44,8 +98,9 @@ function Profile() {
       ), 5000)
     }
 
-    setImage(URL.createObjectURL(image))
+    setImage(image)
   }
+  
 
   // MODAL STYLING =====================================
   const style = {
@@ -84,61 +139,65 @@ function Profile() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">Add Family Member</Typography>
+        <form onSubmit={handleSubmit}>
+          <Box sx={style}>
 
-          <IconButton
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            sx={{
-              width:100,
-              height:100,
-              backgroundColor:"whitesmoke",
-              opacity:0.8,
-              mt:3,
-            }}
-          >
-            <AddIcon />
-            <img
-              src={image} 
-              style={{ 
-                visibility: image ? "visible":"hidden",
+            <Typography id="modal-modal-title" variant="h6" component="h2">Add Family Member</Typography>
+
+            <IconButton
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              sx={{
                 width:100,
                 height:100,
-                objectFit:"cover",
-                position:"absolute",
-                zIndex:-1,
-                borderRadius:50,
+                backgroundColor:"whitesmoke",
+                opacity:0.8,
+                mt:3,
               }}
-            />
-            <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
-          </IconButton>
-          <FormHelperText>Upload an avatar</FormHelperText>
-
-          <TextField fullWidth margin="normal" label="Name" />
-
-          <FormControl fullWidth sx={{mt:1}}>
-            <InputLabel id="helper-text">Relationship</InputLabel>
-            <Select
-              labelId="helper-text"
-              id="relationship-select"
-              value={relationship}
-              label="Relationship"
-              onChange={selectRelationship}
             >
-              <MenuItem value={"Son"}>Son</MenuItem>
-              <MenuItem value={"Daughter"}>Daughter</MenuItem>
-              <MenuItem value={"Partner"}>Partner</MenuItem>
-            </Select>
-            <FormHelperText>Relationship to Child/Family Member</FormHelperText>
-          </FormControl>
+              <AddIcon />
+              <img
+                src={image? URL.createObjectURL(image):null} 
+                style={{ 
+                  visibility: image ? "visible":"hidden",
+                  width:100,
+                  height:100,
+                  objectFit:"cover",
+                  position:"absolute",
+                  zIndex:-1,
+                  borderRadius:50,
+                }}
+              />
+              <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
+            </IconButton>
+            <FormHelperText>Upload an avatar</FormHelperText>
 
-          <Button fullWidth variant="contained" sx={{mt:5}}>Add</Button>
+            <TextField required fullWidth margin="normal" label="Name" value={name} onChange={(e) => (setName(e.target.value))}/>
+
+            <FormControl fullWidth sx={{mt:1}}>
+              <InputLabel id="helper-text">Relationship</InputLabel>
+              <Select
+                required
+                labelId="helper-text"
+                id="relationship-select"
+                value={relationship}
+                label="Relationship"
+                onChange={selectRelationship}
+              >
+                <MenuItem value={"Son"}>Son</MenuItem>
+                <MenuItem value={"Daughter"}>Daughter</MenuItem>
+                <MenuItem value={"Partner"}>Partner</MenuItem>
+              </Select>
+              <FormHelperText>Relationship to Child/Family Member</FormHelperText>
+            </FormControl>
+
+            <Button fullWidth variant="contained" sx={{mt:5}} type="submit">Add</Button>
           
-          {error ? <Alert severity="error">{error}</Alert> : <></>}
-        </Box>
+            {error ? <Alert severity="error">{error}</Alert> : <></>}
+          </Box>
+        </form>
       </Modal>
       
       <Fab
@@ -158,7 +217,7 @@ function Profile() {
             </div>
             <div className="card w-full gap-y-7">
               <ProfileCard 
-                image={"localhost:3000/uploads/file-1718009790380-32139975.png"}
+                image={"http://localhost:3000/api/file/file-1718009790380-32139975.png"}
                 name={"Mary Stewart"}
                 role={"Mother"}
                 bio={"Happy mother of 3 beautiful children. I work a part time job and love cooking and cleaning as a hobby."}
@@ -189,55 +248,15 @@ function Profile() {
             </div>
             
             <div className="box-border w-full h-full gap-y-7">
-              <ProfileCard 
-                image={"https://images.genius.com/3e99ae508da972a2ad9fc7ba2071cd52.435x435x1.jpg"}
-                name={"Dylan Stewart"}
-                role={"Son"}
-                bio={"Asthma"}
-                child
-              />
-              <ProfileCard 
-                image={"https://images.genius.com/3e99ae508da972a2ad9fc7ba2071cd52.435x435x1.jpg"}
-                name={"Dylan Stewart"}
-                role={"Son"}
-                bio={"Asthma"}
-                child
-              />
-              <ProfileCard 
-                image={"https://images.genius.com/3e99ae508da972a2ad9fc7ba2071cd52.435x435x1.jpg"}
-                name={"Dylan Stewart"}
-                role={"Son"}
-                bio={"Asthma"}
-                child
-              />
-              <ProfileCard 
-                image={"https://images.genius.com/3e99ae508da972a2ad9fc7ba2071cd52.435x435x1.jpg"}
-                name={"Dylan Stewart"}
-                role={"Son"}
-                bio={"Asthma"}
-                child
-              />
-              <ProfileCard 
-                image={"https://images.genius.com/3e99ae508da972a2ad9fc7ba2071cd52.435x435x1.jpg"}
-                name={"Dylan Stewart"}
-                role={"Son"}
-                bio={"Asthma"}
-                child
-              />
-              <ProfileCard 
-                image={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguWUvnY-1FNa1o05660_Ia0UdBXBwKPF4Ax_jmnfDrA&s"}
-                name={"Audrey Stewart"}
-                role={"Daughter"}
-                bio={""}
-                child
-              />
-              <ProfileCard 
-                image={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNwFNGcF3lmUeUB-Mgmrx5CsLkDtYnVdAA715rNZqOvw&s"}
-                name={"Josh Stewart"}
-                role={"Son"}
-                bio={""}
-                child
-              />
+              {data && data.map((child)=>(
+                <ProfileCard 
+                  key={child._id}
+                  image={`http://localhost:3000/api/file/${child.image}`}
+                  name={child.name}
+                  role={child.relationship}
+                  child={child.relationship == "Partner"? false:true}
+                />
+              ))}
             </div>
           </Col>
         </Row>

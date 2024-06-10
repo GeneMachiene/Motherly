@@ -4,7 +4,7 @@ var path = require('path');
 // return file path
 const getPath = async (req, res) => {
   try {
-    res.status(200).json(req.file.path);
+    res.status(200).json(req.file.filename);
 
   } catch (err) {
     res.status(500).json(err);
@@ -19,11 +19,11 @@ const getImage = async (req, res) => {
   console.log(filePath);
 
 
-  // Check if the file exists before attempting to send it
-  await fs.promises.access(filePath);
-
-  res.status(200).sendFile(filePath);
   try {
+    // Check if the file exists before attempting to send it
+    await fs.promises.access(filePath);
+  
+    res.status(200).sendFile(filePath);
 
   } catch (err) {
     res.status(404).send('File not found');

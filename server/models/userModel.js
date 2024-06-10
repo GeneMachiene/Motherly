@@ -1,11 +1,12 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const validator = require('validator');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  email: { type: String, required: true, unique: true },
+  // email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
   contact_number: { type: String },
   personal_information: {
@@ -13,7 +14,7 @@ const userSchema = new Schema({
       last_name: { type: String, required: true, maxlength: 100 },
       first_name: { type: String, required: true, maxlength: 100 },
       middle_name: { type: String, required: true, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 }
+      suffix: { type: String, maxlength: 20 },
     },
     address: {
       region: { type: String, maxlength: 100 },
@@ -22,12 +23,21 @@ const userSchema = new Schema({
       district: { type: String, maxlength: 100 },
       barangay: { type: String, maxlength: 100 },
       residence: { type: String, required: true, maxlength: 300 },
-      street: { type: String, maxlength: 100 }
+      street: { type: String, maxlength: 100 },
     },
-    birthdate: { type: Date, required: true },
+    // birthdate: { type: Date, required: true },
+    birthdate: { type: String, required: true },
     age: { type: Number },
-    marital_status: { type: String, enum: ["Single", "Married", "Widowed", "Legally Separated"] },
-    sex: { type: String, enum: ["Male", "Female", "Prefer not to say", "Other"] },
+    marital_status: {
+      type: String,
+      enum: ["Single", "Married", "Widowed", "Legally Separated", ""],
+      default: "Single",
+    },
+    sex: {
+      type: String,
+      enum: ["Male", "Female", "Prefer not to say", "Other", ""],
+      default: "Prefer not to say",
+    },
     place_of_birth: { type: String, required: true, maxlength: 200 },
     contact_one: { type: String, maxlength: 50 },
     contact_two: { type: String, maxlength: 50 },
@@ -35,35 +45,35 @@ const userSchema = new Schema({
     religion: { type: String, maxlength: 50 },
     language_spoken: { type: String, maxlength: 50 },
     tin: { type: String, maxlength: 50 },
-    gsis_or_sss: { type: String, maxlength: 50 }
+    gsis_or_sss: { type: String, maxlength: 50 },
   },
   family: {
     name_of_spouse: {
       last_name: { type: String, maxlength: 100 },
       first_name: { type: String, maxlength: 100 },
       middle_name: { type: String, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 }
+      suffix: { type: String, maxlength: 20 },
     },
     name_of_father: {
       last_name: { type: String, maxlength: 100 },
       first_name: { type: String, maxlength: 100 },
       middle_name: { type: String, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 }
+      suffix: { type: String, maxlength: 20 },
     },
     name_of_mother: {
       last_name: { type: String, maxlength: 100 },
       first_name: { type: String, maxlength: 100 },
       middle_name: { type: String, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 }
-    }
+      suffix: { type: String, maxlength: 20 },
+    },
   },
   education: {
     highest_educational_attainment: { type: String, maxlength: 50 },
-    technical_skills: { type: String, maxlength: 400 }
+    technical_skills: { type: String, maxlength: 400 },
   },
   economic_profile: {
     source_of_income_and_assistance: { type: String, maxlength: 200 },
-    monthly_income: { type: Number }
+    monthly_income: { type: Number },
   },
   health_profile: {
     medical_concern: { type: String, maxlength: 100 },
@@ -71,32 +81,31 @@ const userSchema = new Schema({
     social_or_emotional: { type: String, maxlength: 100 },
     health_problems_or_ailment: { type: String, maxlength: 100 },
     visual_or_hearing_condition: { type: String, maxlength: 100 },
-    area_of_difficulty: { type: String, maxlength: 100 }
+    area_of_difficulty: { type: String, maxlength: 100 },
   },
   photo_references: {
     id: { type: String, maxlength: 100 },
     selfie: { type: String, maxlength: 100 },
-  }
+  },
 });
 
 // static signup method
-userSchema.statics.signup = async function(user) {
-
+userSchema.statics.signup = async function (user) {
   // validation
   if (!user.email || !user.password) {
-    throw Error('All fields must be filled');
+    throw Error("All fields must be filled");
   }
   if (!validator.isEmail(user.email)) {
-    throw Error('Email is not valid');
+    throw Error("Email is not valid");
   }
   if (!validator.isStrongPassword(user.password)) {
-    throw Error('Password not strong enough');
+    throw Error("Password not strong enough");
   }
 
   const exists = await this.findOne({ email: user.email });
 
   if (exists) {
-    throw Error('Email already in use');
+    throw Error("Email already in use");
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -105,29 +114,29 @@ userSchema.statics.signup = async function(user) {
   const userOutput = await this.create(user);
 
   return userOutput;
-}
+};
 
 // static login method
-userSchema.statics.login = async function(user) {
-  if ((!user.email && !user.contact_number) || !user.password){
-    throw Error('All fields must be filled');
+userSchema.statics.login = async function (user) {
+  if ((!user.email && !user.contact_number) || !user.password) {
+    throw Error("All fields must be filled");
   }
 
-  const userResult = await (user.email ?
-    this.findOne({ email: user.email }) :
-    this.findOne({ contact_number: user.contact_number }));
+  const userResult = await (user.email
+    ? this.findOne({ email: user.email })
+    : this.findOne({ contact_number: user.contact_number }));
 
   if (!userResult) {
-    throw Error('Incorrect email or contact number');
+    throw Error("Incorrect email or contact number");
   }
 
   const match = await bcrypt.compare(user.password, userResult.password);
 
-  if(!match){
-    throw Error('Incorrect password');
+  if (!match) {
+    throw Error("Incorrect password");
   }
 
-  return userResult
-}
+  return userResult;
+};
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);

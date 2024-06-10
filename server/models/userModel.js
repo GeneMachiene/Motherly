@@ -72,6 +72,10 @@ const userSchema = new Schema({
     health_problems_or_ailment: { type: String, maxlength: 100 },
     visual_or_hearing_condition: { type: String, maxlength: 100 },
     area_of_difficulty: { type: String, maxlength: 100 }
+  },
+  photo_references: {
+    id: { type: String, maxlength: 100 },
+    selfie: { type: String, maxlength: 100 },
   }
 });
 

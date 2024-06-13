@@ -89,17 +89,6 @@ const userSchema = new Schema({
 
 // static signup method
 userSchema.statics.signup = async function (user) {
-  // validation
-  if (!user.email || !user.password) {
-    throw Error("All fields must be filled");
-  }
-  if (!validator.isEmail(user.email)) {
-    throw Error("Email is not valid");
-  }
-  if (!validator.isStrongPassword(user.password)) {
-    throw Error("Password not strong enough");
-  }
-
   const exists = await this.findOne({ email: user.email });
 
   if (exists) {
@@ -109,10 +98,14 @@ userSchema.statics.signup = async function (user) {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 
+  // Modify birthdate to store only year, month, and day without the timestamp
+  user.personal_information.birthdate = new Date(user.personal_information.birthdate.toISOString().split('T')[0]);
+
   const userOutput = await this.create(user);
 
   return userOutput;
 };
+
 
 // static login method
 userSchema.statics.login = async function (user) {

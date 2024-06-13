@@ -99,13 +99,14 @@ userSchema.statics.signup = async function (user) {
   user.password = await bcrypt.hash(user.password, salt);
 
   // Modify birthdate to store only year, month, and day without the timestamp
-  user.personal_information.birthdate = new Date(user.personal_information.birthdate.toISOString().split('T')[0]);
+  user.personal_information.birthdate = new Date(
+    user.personal_information.birthdate.toISOString().split("T")[0]
+  );
 
   const userOutput = await this.create(user);
 
   return userOutput;
 };
-
 
 // static login method
 userSchema.statics.login = async function (user) {

@@ -1,5 +1,7 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+const { validationResult } = require("express-validator");
+const { userRegisterValidationRules } = require('../validators/userValidator');
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -20,17 +22,26 @@ const loginUser = async (req, res) => {
 }
 
 // signup user
-const signupUser = async (req, res) => {
-  try{
-    const user = await User.signup(req.body)
+const signupUser = [
+  userRegisterValidationRules(),
 
-    // create token
-    const token = createToken(user._id)
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    res.status(200).json({ email: user.email, token})
-  } catch (error) {
-    res.status(400).json({ error: error.message })
+    try {
+      const user = await User.signup(req.body);
+
+      // create token
+      const token = createToken(user._id);
+
+      return res.status(200).json({ email: user.email, token });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
   }
-}
+];
 
 module.exports = {signupUser, loginUser}

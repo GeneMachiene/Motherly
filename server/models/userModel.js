@@ -5,8 +5,7 @@ const validator = require("validator");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  // email: { type: String, required: true, unique: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   contact_number: { type: String },
   personal_information: {
@@ -25,18 +24,17 @@ const userSchema = new Schema({
       residence: { type: String, required: true, maxlength: 300 },
       street: { type: String, maxlength: 100 },
     },
-    // birthdate: { type: Date, required: true },
-    birthdate: { type: String, required: true },
+    birthdate: { type: Date, required: true },
     age: { type: Number },
     marital_status: {
       type: String,
-      enum: ["Single", "Married", "Widowed", "Legally Separated", ""],
-      default: "Single",
+      enum: ["Single", "Married", "Widowed", "Legally Separated"],
+      default: null,
     },
     sex: {
       type: String,
-      enum: ["Male", "Female", "Prefer not to say", "Other", ""],
-      default: "Prefer not to say",
+      enum: ["Male", "Female", "Prefer not to say", "Other"],
+      default: null,
     },
     place_of_birth: { type: String, required: true, maxlength: 200 },
     contact_one: { type: String, maxlength: 50 },

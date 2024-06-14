@@ -13,4 +13,4 @@ regionSchema.statics.add = async function(region) {
   return regionOutput;
 }
 
-module.exports = mongoose.model('region', regionSchema);
+module.exports = mongoose.model('Region', regionSchema);

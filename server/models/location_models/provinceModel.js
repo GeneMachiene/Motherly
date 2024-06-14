@@ -14,4 +14,4 @@ provinceSchema.statics.add = async function(province) {
   return provinceOutput;
 }
 
-module.exports = mongoose.model('province', provinceSchema);
+module.exports = mongoose.model('Province', provinceSchema);

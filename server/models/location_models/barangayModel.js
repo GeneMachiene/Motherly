@@ -14,4 +14,4 @@ barangaySchema.statics.add = async function(barangay) {
   return barangayOutput;
 }
 
-module.exports = mongoose.model('barangay', barangaySchema);
+module.exports = mongoose.model('Barangay', barangaySchema);

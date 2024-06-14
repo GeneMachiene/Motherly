@@ -20,4 +20,4 @@ childSchema.statics.add = async function(child) {
   return childOutput;
 }
 
-module.exports = mongoose.model('child', childSchema);
+module.exports = mongoose.model('Child', childSchema);

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
@@ -16,11 +15,11 @@ const userSchema = new Schema({
       suffix: { type: String, maxlength: 20 },
     },
     address: {
-      region: { type: String, maxlength: 100 },
-      province: { type: String, maxlength: 100 },
-      city: { type: String, maxlength: 100 },
+      region: { type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: false },
+      province: { type: mongoose.Schema.Types.ObjectId, ref: 'Province', required: false },
+      city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: false },
       district: { type: String, maxlength: 100 },
-      barangay: { type: String, maxlength: 100 },
+      barangay: { type: mongoose.Schema.Types.ObjectId, ref: 'Barangay', required: false },
       residence: { type: String, required: true, maxlength: 300 },
       street: { type: String, maxlength: 100 },
     },
@@ -131,4 +130,4 @@ userSchema.statics.login = async function (user) {
   return userResult;
 };
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);

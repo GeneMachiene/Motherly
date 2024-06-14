@@ -146,6 +146,20 @@ const userRegisterValidationRules = () => {
   ];
 };
 
+const isExistentId = async function (value) {
+  if (!value) {
+    return true;
+  }
+
+  try {
+    const doc = await this.model(this.options.ref).findById(value);
+    return !!doc;
+  } catch (err) {
+    return false;
+  }
+};
+
 module.exports = {
+  isExistentId,
   userRegisterValidationRules,
 };

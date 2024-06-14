@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { isExistentId } = require("../validators/userValidator");
 
 const Schema = mongoose.Schema;
 
@@ -15,11 +16,39 @@ const userSchema = new Schema({
       suffix: { type: String, maxlength: 20 },
     },
     address: {
-      region: { type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: false },
-      province: { type: mongoose.Schema.Types.ObjectId, ref: 'Province', required: false },
-      city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: false },
+      region: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Region",
+        validate: {
+          validator: isExistentId,
+          message: "Region with provided ID does not exist.",
+        },
+      },
+      province: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Province",
+        validate: {
+          validator: isExistentId,
+          message: "Province with provided ID does not exist.",
+        },
+      },
+      city: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "City",
+        validate: {
+          validator: isExistentId,
+          message: "City with provided ID does not exist.",
+        },
+      },
+      barangay: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Barangay",
+        validate: {
+          validator: isExistentId,
+          message: "Barangay with provided ID does not exist.",
+        },
+      },
       district: { type: String, maxlength: 100 },
-      barangay: { type: mongoose.Schema.Types.ObjectId, ref: 'Barangay', required: false },
       residence: { type: String, required: true, maxlength: 300 },
       street: { type: String, maxlength: 100 },
     },

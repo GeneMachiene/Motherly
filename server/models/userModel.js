@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { isExistentId } = require("../validators/userValidator");
 
 const Schema = mongoose.Schema;
 
@@ -19,34 +18,18 @@ const userSchema = new Schema({
       region: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Region",
-        validate: {
-          validator: isExistentId,
-          message: "Region with provided ID does not exist.",
-        },
       },
       province: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Province",
-        validate: {
-          validator: isExistentId,
-          message: "Province with provided ID does not exist.",
-        },
       },
       city: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "City",
-        validate: {
-          validator: isExistentId,
-          message: "City with provided ID does not exist.",
-        },
       },
       barangay: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Barangay",
-        validate: {
-          validator: isExistentId,
-          message: "Barangay with provided ID does not exist.",
-        },
       },
       district: { type: String, maxlength: 100 },
       residence: { type: String, required: true, maxlength: 300 },

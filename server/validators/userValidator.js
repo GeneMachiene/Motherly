@@ -174,20 +174,6 @@ const validateAndSanitizeUser = () => {
   ];
 };
 
-const isExistentId = async function (value) {
-  if (!value) {
-    return true; // null or empty string is considered valid
-  }
-
-  try {
-    const doc = await this.model(this.options.ref).findById(value);
-    return !!doc;
-  } catch (err) {
-    return false;
-  }
-};
-
 module.exports = {
   validateAndSanitizeUser,
-  isExistentId,
 };

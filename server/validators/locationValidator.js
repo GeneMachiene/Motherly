@@ -49,4 +49,7 @@ const validateAndSanitizeBarangay = () => {
 
 module.exports = {
   validateAndSanitizeRegion,
+  validateAndSanitizeProvince,
+  validateAndSanitizeCity,
+  validateAndSanitizeBarangay,
 };

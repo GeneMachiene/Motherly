@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { isExistentId } = require("../../validators/userValidator");
+const Region = require("./regionModel");
 
 const Schema = mongoose.Schema;
 
@@ -8,18 +8,25 @@ const provinceSchema = new Schema({
   region: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Region",
-    validate: {
-      validator: isExistentId,
-      message: "Region with provided ID does not exist.",
-    },
+    required: true,
   },
 });
 
-// static create method
 provinceSchema.statics.add = async function (province) {
-  const provinceOutput = await this.create(province);
+  const regionExists = await Region.findById(province.region).exec();
+  if (!regionExists) {
+    throw Error("Region with provided ID does not exist.");
+  }
 
-  return provinceOutput;
+  const provinceExists = await this.findOne({
+    name: province.name,
+    region: province.region,
+  }).exec();
+  if (provinceExists) {
+    throw Error("Province with provided name and region already exists.");
+  }
+
+  await this.create(province);
 };
 
 module.exports = mongoose.model("Province", provinceSchema);

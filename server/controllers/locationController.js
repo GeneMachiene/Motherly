@@ -7,57 +7,50 @@ const locationValidator = require("../validators/locationValidator");
 
 const location_list = async (req, res) => {
   try {
-    // Get all regions
-    const regions = await Region.find();
+    const regions = await Region.find().lean();
 
-    // Populate provinces for each region
-    const populatedRegions = await Promise.all(
+    const result = await Promise.all(
       regions.map(async (region) => {
-        const populatedRegion = region.toJSON();
-        populatedRegion.provinces = await Province.find({
-          region: region._id,
-        }).populate("cities");
-        return populatedRegion;
+        const provinces = await Province.find({ region: region._id }).lean();
+
+        const provincesWithCities = await Promise.all(
+          provinces.map(async (province) => {
+            const cities = await City.find({ province: province._id }).lean();
+
+            const citiesWithBarangays = await Promise.all(
+              cities.map(async (city) => {
+                const barangays = await Barangay.find({
+                  city: city._id,
+                }).lean();
+
+                return {
+                  _id: city._id,
+                  name: city.name,
+                  barangays: barangays.map((barangay) => ({
+                    _id: barangay._id,
+                    name: barangay.name,
+                  })),
+                };
+              })
+            );
+
+            return {
+              _id: province._id,
+              name: province.name,
+              cities: citiesWithBarangays,
+            };
+          })
+        );
+
+        return {
+          _id: region._id,
+          name: region.name,
+          provinces: provincesWithCities,
+        };
       })
     );
 
-    // Populate cities for each province
-    const populatedProvinces = await Promise.all(
-      populatedRegions.flatMap((region) =>
-        region.provinces.map(async (province) => {
-          const populatedProvince = province.toJSON();
-          populatedProvince.cities = await City.find({
-            province: province._id,
-          }).populate("barangays");
-          return populatedProvince;
-        })
-      )
-    );
-
-    // Populate barangays for each city
-    const populatedCities = await Promise.all(
-      populatedProvinces.flatMap((province) =>
-        province.cities.map(async (city) => {
-          const populatedCity = city.toJSON();
-          populatedCity.barangays = await Barangay.find({ city: city._id });
-          return populatedCity;
-        })
-      )
-    );
-
-    // Format the result into the desired embedded object structure
-    const locationObject = populatedRegions.reduce((acc, region) => {
-      acc[region.name] = region.provinces.reduce((provinceAcc, province) => {
-        provinceAcc[province.name] = province.cities.reduce((cityAcc, city) => {
-          cityAcc[city.name] = city.barangays.map((barangay) => barangay.name);
-          return cityAcc;
-        }, {});
-        return provinceAcc;
-      }, {});
-      return acc;
-    }, {});
-
-    return res.status(200).json(locationObject);
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ error: "Internal server error" });
@@ -81,4 +74,61 @@ const region_create = [
   },
 ];
 
-module.exports = { location_list, region_create };
+const province_create = [
+  locationValidator.validateAndSanitizeProvince(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await Province.add(req.body);
+      return res.status(200).json({ message: "Province added successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
+const city_create = [
+  locationValidator.validateAndSanitizeCity(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await City.add(req.body);
+      return res.status(200).json({ message: "City added successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
+const barangay_create = [
+  locationValidator.validateAndSanitizeBarangay(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await Barangay.add(req.body);
+      return res.status(200).json({ message: "Barangay added successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
+module.exports = {
+  location_list,
+  region_create,
+  province_create,
+  city_create,
+  barangay_create,
+};

@@ -2,6 +2,7 @@ const Region = require("../models/location_models/regionModel");
 const Province = require("../models/location_models/provinceModel");
 const City = require("../models/location_models/cityModel");
 const Barangay = require("../models/location_models/barangayModel");
+const locationValidator = require("../validators/locationValidator");
 
 const location_list = async (req, res) => {
   try {
@@ -62,6 +63,22 @@ const location_list = async (req, res) => {
   }
 };
 
-const region_create = async (req, res) => {};
+const region_create = [
+  locationValidator.validateAndSanitizeRegion(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const user = await Region.signup(req.body);
+
+      return res.status(200).json({ message: "Region added successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
 
 module.exports = { location_list, region_create };

@@ -24,7 +24,6 @@ const loginUser = async (req, res) => {
 // signup user
 const signupUser = [
   validateAndSanitizeUser(),
-
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

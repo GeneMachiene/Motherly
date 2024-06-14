@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator");
 const Region = require("../models/location_models/regionModel");
 const Province = require("../models/location_models/provinceModel");
 const City = require("../models/location_models/cityModel");
@@ -72,8 +73,7 @@ const region_create = [
     }
 
     try {
-      const user = await Region.signup(req.body);
-
+      await Region.create(req.body);
       return res.status(200).json({ message: "Region added successfully." });
     } catch (error) {
       return res.status(400).json({ error: error.message });

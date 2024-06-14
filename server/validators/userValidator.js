@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-const userRegisterValidationRules = () => {
+const validateAndSanitizeUser = () => {
   return [
     body("email").isEmail().withMessage("Invalid email address"),
     body("password")
@@ -160,6 +160,6 @@ const isExistentId = async function (value) {
 };
 
 module.exports = {
+  validateAndSanitizeUser,
   isExistentId,
-  userRegisterValidationRules,
 };

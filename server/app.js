@@ -33,6 +33,6 @@ app.use("/test", testRouter);
 app.use("/user", userRoutes);
 app.use("/child", childRoutes);
 app.use("/api", apiRoutes);
-app.use("/location", locationRoutes);
+app.use("/locations", locationRoutes);
 
 module.exports = app;

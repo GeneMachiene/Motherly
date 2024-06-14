@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { region_list } = require("../controllers/locationController");
+const location_controller = require("../controllers/locationController");
 
-/* GET home page. */
-router.get("/locations", region_list);
+router.get("/", location_controller.location_list);
+
+router.post("/region/create", location_controller.region_create);
 
 module.exports = router;

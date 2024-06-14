@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const { isExistentId } = require("../validators/userValidator");
+const { isExistentId } = require("../../validators/userValidator");
 
 const Schema = mongoose.Schema;
 
 const barangaySchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, maxlength: 100 },
   city: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "City",

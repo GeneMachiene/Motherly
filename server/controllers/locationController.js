@@ -64,4 +64,4 @@ const location_list = async (req, res) => {
 
 const region_create = async (req, res) => {};
 
-module.exports = { region_list };
+module.exports = { location_list, region_create };

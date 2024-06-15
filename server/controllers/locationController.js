@@ -58,7 +58,7 @@ const location_list = async (req, res) => {
 };
 
 const region_create = [
-  locationValidator.validateAndSanitizeRegion(),
+  locationValidator.validateAndSanitizeCreateRegion(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -74,8 +74,10 @@ const region_create = [
   },
 ];
 
+// const region_delete =
+
 const province_create = [
-  locationValidator.validateAndSanitizeProvince(),
+  locationValidator.validateAndSanitizeCreateProvince(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -92,7 +94,7 @@ const province_create = [
 ];
 
 const city_create = [
-  locationValidator.validateAndSanitizeCity(),
+  locationValidator.validateAndSanitizeCreateCity(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -109,7 +111,7 @@ const city_create = [
 ];
 
 const barangay_create = [
-  locationValidator.validateAndSanitizeBarangay(),
+  locationValidator.validateAndSanitizeCreateBarangay(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

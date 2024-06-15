@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-const validateAndSanitizeRegion = () => {
+const validateAndSanitizeCreateRegion = () => {
   return body("name")
     .trim()
     .isString()
@@ -9,7 +9,9 @@ const validateAndSanitizeRegion = () => {
     .withMessage("Name must not exceed 100 characters");
 };
 
-const validateAndSanitizeProvince = () => {
+const validateAndSanitizeUpdateRegion = validateAndSanitizeCreateRegion;
+
+const validateAndSanitizeCreateProvince = () => {
   return [
     body("name")
       .trim()
@@ -21,7 +23,9 @@ const validateAndSanitizeProvince = () => {
   ];
 };
 
-const validateAndSanitizeCity = () => {
+const validateAndSanitizeUpdateProvince = validateAndSanitizeCreateProvince;
+
+const validateAndSanitizeCreateCity = () => {
   return [
     body("name")
       .trim()
@@ -35,7 +39,9 @@ const validateAndSanitizeCity = () => {
   ];
 };
 
-const validateAndSanitizeBarangay = () => {
+const validateAndSanitizeUpdateCity = validateAndSanitizeCreateCity;
+
+const validateAndSanitizeCreateBarangay = () => {
   return [
     body("name")
       .trim()
@@ -47,9 +53,11 @@ const validateAndSanitizeBarangay = () => {
   ];
 };
 
+const validateAndSanitizeUpdateBarangay = validateAndSanitizeCreateBarangay;
+
 module.exports = {
-  validateAndSanitizeRegion,
-  validateAndSanitizeProvince,
-  validateAndSanitizeCity,
-  validateAndSanitizeBarangay,
+  validateAndSanitizeCreateRegion,
+  validateAndSanitizeCreateProvince,
+  validateAndSanitizeCreateCity,
+  validateAndSanitizeCreateBarangay,
 };

@@ -31,6 +31,13 @@ provinceSchema.statics.add = async function (province) {
   this.create(province);
 };
 
+provinceSchema.statics.update = async function (id, name) {
+  const result = await this.findByIdAndUpdate(id, { name }).exec();
+  if (!result) {
+    throw new Error("Province with provided ID does not exist.");
+  }
+};
+
 provinceSchema.pre("findOneAndDelete", async function (next) {
   const provinceId = this.getQuery()._id;
   try {

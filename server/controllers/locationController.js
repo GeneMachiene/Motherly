@@ -4,6 +4,7 @@ const Province = require("../models/location_models/provinceModel");
 const City = require("../models/location_models/cityModel");
 const Barangay = require("../models/location_models/barangayModel");
 const locationValidator = require("../validators/locationValidator");
+const { validateMongoId } = require("../validators/generalValidator");
 
 const location_list = async (req, res) => {
   try {
@@ -75,6 +76,7 @@ const region_create = [
 ];
 
 const region_update = [
+  validateMongoId("Region"),
   locationValidator.validateAndSanitizeRegion(),
   async (req, res) => {
     const errors = validationResult(req);
@@ -101,7 +103,7 @@ const region_delete = async (req, res) => {
 };
 
 const province_create = [
-  locationValidator.validateAndSanitizeProvince(),
+  locationValidator.validateAndSanitizeProvince("create"),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -111,6 +113,26 @@ const province_create = [
     try {
       await Province.add(req.body);
       return res.status(200).json({ message: "Province added successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
+const province_update = [
+  validateMongoId("Province"),
+  locationValidator.validateAndSanitizeProvince("update"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await Province.update(req.params.id, req.body.name);
+      return res
+        .status(200)
+        .json({ message: "Province updated successfully." });
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
@@ -127,7 +149,7 @@ const province_delete = async (req, res) => {
 };
 
 const city_create = [
-  locationValidator.validateAndSanitizeCity(),
+  locationValidator.validateAndSanitizeCity("create"),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -153,7 +175,7 @@ const city_delete = async (req, res) => {
 };
 
 const barangay_create = [
-  locationValidator.validateAndSanitizeBarangay(),
+  locationValidator.validateAndSanitizeBarangay("create"),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -184,6 +206,7 @@ module.exports = {
   region_update,
   region_delete,
   province_create,
+  province_update,
   province_delete,
   city_create,
   city_delete,

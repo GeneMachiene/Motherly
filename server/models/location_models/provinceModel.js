@@ -46,4 +46,16 @@ provinceSchema.pre("findOneAndDelete", async function (next) {
   }
 });
 
+provinceSchema.pre("deleteMany", async function (next) {
+  try {
+    const cities = await this.model.find(this.getFilter());
+    const provinceIds = cities.map((province) => province._id);
+
+    await mongoose.model("City").deleteMany({ province: { $in: provinceIds } });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = mongoose.model("Province", provinceSchema);

@@ -13,4 +13,19 @@ regionSchema.statics.update = async function (id, name) {
   }
 };
 
+regionSchema.pre("findOneAndDelete", async function (next) {
+  const regionId = this.getQuery()._id;
+  try {
+    const region = await this.model.findOne({ _id: regionId });
+    if (!region) {
+      throw new Error("Region with provided ID does not exist.");
+    }
+
+    await mongoose.model("Province").deleteMany({ region: regionId });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = mongoose.model("Region", regionSchema);

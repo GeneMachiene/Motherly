@@ -8,6 +8,8 @@ router.post("/region/create", location_controller.region_create);
 
 router.put("/region/update/:id", location_controller.region_update);
 
+router.delete("/region/delete/:id", location_controller.region_delete);
+
 router.post("/province/create", location_controller.province_create);
 
 router.delete("/province/delete/:id", location_controller.province_delete);

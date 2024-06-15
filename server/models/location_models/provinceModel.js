@@ -31,4 +31,19 @@ provinceSchema.statics.add = async function (province) {
   this.create(province);
 };
 
+provinceSchema.pre("findOneAndDelete", async function (next) {
+  const provinceId = this.getQuery()._id;
+  try {
+    const province = await this.model.findOne({ _id: provinceId });
+    if (!province) {
+      throw new Error("Province with provided ID does not exist.");
+    }
+
+    await mongoose.model("City").deleteMany({ province: provinceId });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = mongoose.model("Province", provinceSchema);

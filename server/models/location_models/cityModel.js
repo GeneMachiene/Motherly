@@ -46,4 +46,16 @@ citySchema.pre("findOneAndDelete", async function (next) {
   }
 });
 
+citySchema.pre("deleteMany", async function (next) {
+  try {
+    const cities = await this.model.find(this.getFilter());
+    const cityIds = cities.map((city) => city._id);
+
+    await mongoose.model("Barangay").deleteMany({ city: { $in: cityIds } });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = mongoose.model("City", citySchema);

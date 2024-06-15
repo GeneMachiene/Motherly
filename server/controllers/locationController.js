@@ -117,6 +117,15 @@ const province_create = [
   },
 ];
 
+const province_delete = async (req, res) => {
+  try {
+    await Province.findOneAndDelete({ _id: req.params.id }).exec();
+    return res.status(200).json({ message: "Province deleted successfully." });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 const city_create = [
   locationValidator.validateAndSanitizeCity(),
   async (req, res) => {
@@ -174,6 +183,7 @@ module.exports = {
   region_create,
   region_update,
   province_create,
+  province_delete,
   city_create,
   city_delete,
   barangay_create,

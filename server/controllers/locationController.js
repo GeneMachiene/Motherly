@@ -74,6 +74,23 @@ const region_create = [
   },
 ];
 
+const region_update = [
+  locationValidator.validateAndSanitizeRegion(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await Region.update(req.params.id, req.body.name);
+      return res.status(200).json({ message: "Region updated successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
 const province_create = [
   locationValidator.validateAndSanitizeProvince(),
   async (req, res) => {
@@ -128,6 +145,7 @@ const barangay_create = [
 module.exports = {
   location_list,
   region_create,
+  region_update,
   province_create,
   city_create,
   barangay_create,

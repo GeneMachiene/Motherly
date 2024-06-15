@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const City = require("./cityModel");
 
 const Schema = mongoose.Schema;
 
@@ -13,7 +12,10 @@ const barangaySchema = new Schema({
 });
 
 barangaySchema.statics.add = async function (barangay) {
-  const cityExists = await City.findById(barangay.city).exec();
+  const cityExists = await mongoose
+    .model("City")
+    .findById(barangay.city)
+    .exec();
   if (!cityExists) {
     throw Error("City with provided ID does not exist.");
   }
@@ -26,7 +28,7 @@ barangaySchema.statics.add = async function (barangay) {
     throw Error("Barangay with provided name and region already exists.");
   }
 
-  await this.create(barangay);
+  this.create(barangay);
 };
 
 barangaySchema.statics.delete = async function (id) {

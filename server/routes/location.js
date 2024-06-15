@@ -12,6 +12,8 @@ router.post("/province/create", location_controller.province_create);
 
 router.post("/city/create", location_controller.city_create);
 
+router.delete("/city/delete/:id", location_controller.city_delete);
+
 router.post("/barangay/create", location_controller.barangay_create);
 
 router.delete("/barangay/delete/:id", location_controller.barangay_delete);

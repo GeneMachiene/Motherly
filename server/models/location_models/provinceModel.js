@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Region = require("./regionModel");
 
 const Schema = mongoose.Schema;
 
@@ -13,7 +12,10 @@ const provinceSchema = new Schema({
 });
 
 provinceSchema.statics.add = async function (province) {
-  const regionExists = await Region.findById(province.region).exec();
+  const regionExists = await mongoose
+    .model("Region")
+    .findById(province.region)
+    .exec();
   if (!regionExists) {
     throw Error("Region with provided ID does not exist.");
   }
@@ -26,7 +28,7 @@ provinceSchema.statics.add = async function (province) {
     throw Error("Province with provided name and region already exists.");
   }
 
-  await this.create(province);
+  this.create(province);
 };
 
 module.exports = mongoose.model("Province", provinceSchema);

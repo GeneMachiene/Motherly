@@ -91,6 +91,15 @@ const region_update = [
   },
 ];
 
+// const region_delete = async (req, res) => {
+//   try {
+//     await Region.update(req.params.id, req.body.name);
+//     return res.status(200).json({ message: "Region updated successfully." });
+//   } catch (error) {
+//     return res.status(400).json({ error: error.message });
+//   }
+// };
+
 const province_create = [
   locationValidator.validateAndSanitizeProvince(),
   async (req, res) => {
@@ -142,6 +151,15 @@ const barangay_create = [
   },
 ];
 
+const barangay_delete = async (req, res) => {
+  try {
+    await Barangay.delete(req.params.id);
+    return res.status(200).json({ message: "Barangay deleted successfully." });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   location_list,
   region_create,
@@ -149,4 +167,5 @@ module.exports = {
   province_create,
   city_create,
   barangay_create,
+  barangay_delete,
 };

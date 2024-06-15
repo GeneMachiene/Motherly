@@ -29,4 +29,11 @@ barangaySchema.statics.add = async function (barangay) {
   await this.create(barangay);
 };
 
+barangaySchema.statics.delete = async function (id) {
+  const result = await this.findByIdAndDelete(id).exec();
+  if (!result) {
+    throw new Error("Barangay with provided ID does not exist.");
+  }
+};
+
 module.exports = mongoose.model("Barangay", barangaySchema);

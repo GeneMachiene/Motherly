@@ -165,6 +165,24 @@ const city_create = [
   },
 ];
 
+const city_update = [
+  validateMongoId("City"),
+  locationValidator.validateAndSanitizeCity("update"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await City.update(req.params.id, req.body.name);
+      return res.status(200).json({ message: "City updated successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
 const city_delete = async (req, res) => {
   try {
     await City.findOneAndDelete({ _id: req.params.id }).exec();
@@ -209,6 +227,7 @@ module.exports = {
   province_update,
   province_delete,
   city_create,
+  city_update,
   city_delete,
   barangay_create,
   barangay_delete,

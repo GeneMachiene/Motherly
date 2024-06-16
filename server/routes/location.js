@@ -18,6 +18,8 @@ router.delete("/province/delete/:id", location_controller.province_delete);
 
 router.post("/city/create", location_controller.city_create);
 
+router.put("/city/update/:id", location_controller.city_update);
+
 router.delete("/city/delete/:id", location_controller.city_delete);
 
 router.post("/barangay/create", location_controller.barangay_create);

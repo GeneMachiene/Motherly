@@ -31,6 +31,13 @@ citySchema.statics.add = async function (city) {
   this.create(city);
 };
 
+citySchema.statics.update = async function (id, name) {
+  const result = await this.findByIdAndUpdate(id, { name }).exec();
+  if (!result) {
+    throw new Error("City with provided ID does not exist.");
+  }
+};
+
 citySchema.pre("findOneAndDelete", async function (next) {
   const cityId = this.getQuery()._id;
   try {

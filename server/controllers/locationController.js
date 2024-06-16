@@ -209,6 +209,26 @@ const barangay_create = [
   },
 ];
 
+const barangay_update = [
+  validateMongoId("Barangay"),
+  locationValidator.validateAndSanitizeBarangay("update"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await Barangay.update(req.params.id, req.body.name);
+      return res
+        .status(200)
+        .json({ message: "Barangay updated successfully." });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
+
 const barangay_delete = async (req, res) => {
   try {
     await Barangay.delete(req.params.id);
@@ -230,5 +250,6 @@ module.exports = {
   city_update,
   city_delete,
   barangay_create,
+  barangay_update,
   barangay_delete,
 };

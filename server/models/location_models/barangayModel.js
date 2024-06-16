@@ -31,6 +31,13 @@ barangaySchema.statics.add = async function (barangay) {
   this.create(barangay);
 };
 
+barangaySchema.statics.update = async function (id, name) {
+  const result = await this.findByIdAndUpdate(id, { name }).exec();
+  if (!result) {
+    throw new Error("Barangay with provided ID does not exist.");
+  }
+};
+
 barangaySchema.statics.delete = async function (id) {
   const result = await this.findByIdAndDelete(id).exec();
   if (!result) {

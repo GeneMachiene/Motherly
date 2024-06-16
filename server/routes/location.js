@@ -24,6 +24,8 @@ router.delete("/city/delete/:id", location_controller.city_delete);
 
 router.post("/barangay/create", location_controller.barangay_create);
 
+router.put("/barangay/update/:id", location_controller.barangay_update);
+
 router.delete("/barangay/delete/:id", location_controller.barangay_delete);
 
 module.exports = router;

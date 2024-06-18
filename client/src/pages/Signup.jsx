@@ -101,7 +101,7 @@ function Signup() {
                   </label>
                   <input
                     onChange={handleUserChange}
-                    value={user.name.first_name}
+                    value={user.name.last_name}
                     type="text"
                     placeholder="Last Name"
                     className="input input-bordered"

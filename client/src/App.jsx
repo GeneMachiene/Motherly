@@ -4,6 +4,7 @@ import Header from './pages/components/Header'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Register from './pages/Register'
+import Signup from './pages/Signup'
 
 function App() {
   const currentURI = window.location.href.split('/').at(-1);

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useSignup } from "../hooks/useSignup";
-
 import AsyncSelect from "react-select/async";
 import AddIcon from "@mui/icons-material/Add";
 import {
@@ -106,25 +105,12 @@ const emptyUser = {
 
 function Register() {
   const [user, updateUser] = useImmer(emptyUser);
-  const [image, setImage] = useState(null)
   const { signup, error, isLoading } = useSignup();
 
   // for debugging purposes
   useEffect(() => {
     console.log("User changed:", user);
   }, [user]);
-
-  function selectImage(event) {
-    const image = event.target.files[0];
-    const  fileType = image['type'];
-    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-
-    if (!validImageTypes.includes(fileType)) {
-      console.log("wrong file type")
-    }
-
-    setImage(image)
-  }
 
   const handleUserChange = (e) => {
     const { name, value } = e.target;
@@ -390,7 +376,7 @@ function Register() {
           Wrap
           Text={"2. Address"}
           Hint={
-            "Select region first, then province, then city."
+            "Select region first, then province, then city, then district and your barangay"
           }
         />
         <Row>
@@ -405,6 +391,14 @@ function Register() {
               placeholder="All Cities/Municipalities"
               className="mb-6"
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={4}>
+            <AsyncSelect placeholder="All Districts" className="mb-6" />
+          </Col>
+          <Col md={8}>
+            <AsyncSelect placeholder="All Barangays" className="mb-6" />
           </Col>
         </Row>
         <Row className="mb-2">
@@ -600,11 +594,155 @@ function Register() {
           </Col>
         </Row>
 
-        <Divider Text={"II. Health Profile"} />
+        <Divider Text={"II. Family"} />
+
+        <SectionLabel Text={"15. Spouse's Name"} Hint={"Pangalan ng Asawa"} />
+        <Row>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="last_name"
+              label="Lastname (Apelyido)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="first_name"
+              label="Firstname (Unang Pangalan)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="middle_name"
+              label="Middlename (Gitnang Pangalan)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input onChange={handleUserChange} name="suffix" label="Suffix" />
+          </Col>
+        </Row>
+
+        <SectionLabel Text={"16. Fathers's Name"} Hint={"Pangalan ng Ama"} />
+        <Row>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="last_name"
+              label="Lastname (Apelyido)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="first_name"
+              label="Firstname (Unang Pangalan)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="middle_name"
+              label="Middlename (Gitnang Pangalan)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input onChange={handleUserChange} name="suffix" label="Suffix" />
+          </Col>
+        </Row>
+
+        <SectionLabel Text={"17. Mother's Name"} Hint={"Pangalan ng Ina"} />
+        <Row className="mb-2">
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="last_name"
+              label="Lastname (Apelyido)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="first_name"
+              label="Firstname (Unang Pangalan)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input
+              onChange={handleUserChange}
+              name="middle_name"
+              label="Middlename (Gitnang Pangalan)"
+            />
+          </Col>
+          <Col md={3}>
+            <Input onChange={handleUserChange} name="suffix" label="Suffix" />
+          </Col>
+        </Row>
+
+        <Divider Text={"III. Education"} />
+
+        <SectionLabel
+          Text={"18. Highest Educational Attainment"}
+          Hint={
+            "(Elementary/High school/Vocational course/College/Postgraduate)"
+          }
+        />
+        <Row>
+          <Col md={12}>
+            <Input
+              onChange={handleUserChange}
+              name="educational_attainment"
+              label="Highest Educational Attainment"
+            />
+          </Col>
+        </Row>
+
+        <SectionLabel
+          Text={"19. Technical Skills"}
+          Hint={"Teknikal na kakayahan"}
+        />
+        <Row className="mb-2">
+          <Col md={12}>
+            <Input
+              onChange={handleUserChange}
+              name="tech_skills"
+              label="Technical Skills"
+            />
+          </Col>
+        </Row>
+
+        <Divider Text={"IV. Economic Profile"} />
+
+        <Row>
+          <Col md={6}>
+            <SectionLabel
+              Text={"20. Source of Income & Assistance"}
+              Hint={
+                "(E.g.-Pension/Investments/Government Aid,Scholarships/etc.)"
+              }
+            />
+            <Input
+              onChange={handleUserChange}
+              name="source_incom"
+              label="Source of Income"
+            />
+          </Col>
+          <Col md={6}>
+            <SectionLabel Text={"21. Monthly Income"} Hint={"Buwanang kita"} />
+            <Input
+              onChange={handleUserChange}
+              name="monthly_income"
+              label="Monthly Income"
+            />
+          </Col>
+        </Row>
+
+        <Divider Text={"V. Health Profile"} />
 
         <Row>
           <Col md={4}>
-            <SectionLabel Text={"15. Medical Concern"} />
+            <SectionLabel Text={"22. Medical Concern"} />
             <Input
               onChange={handleUserChange}
               name="med_concern"
@@ -612,7 +750,7 @@ function Register() {
             />
           </Col>
           <Col md={4}>
-            <SectionLabel Text={"16. Dental Concern"} />
+            <SectionLabel Text={"23. Dental Concern"} />
             <Input
               onChange={handleUserChange}
               name="dent_concern"
@@ -620,7 +758,7 @@ function Register() {
             />
           </Col>
           <Col md={4}>
-            <SectionLabel Text={"17. Social/Emotional"} />
+            <SectionLabel Text={"24. Social/Emotional"} />
             <Input
               onChange={handleUserChange}
               name="soc_emotional"
@@ -631,7 +769,7 @@ function Register() {
 
         <Row className="mb-2">
           <Col md={4}>
-            <SectionLabel Text={"18. Health Problems / Ailment"} />
+            <SectionLabel Text={"25. Health Problems / Ailment"} />
             <Input
               onChange={handleUserChange}
               name="health_probs"
@@ -639,7 +777,7 @@ function Register() {
             />
           </Col>
           <Col md={4}>
-            <SectionLabel Text={"19. Visual / Hearing Condition"} />
+            <SectionLabel Text={"26. Visual / Hearing Condition"} />
             <Input
               onChange={handleUserChange}
               name="vis_hear"
@@ -647,7 +785,7 @@ function Register() {
             />
           </Col>
           <Col md={4}>
-            <SectionLabel Text={"20. Area of Difficulty"} />
+            <SectionLabel Text={"27. Area of Difficulty"} />
             <Input
               onChange={handleUserChange}
               name="area_dif"
@@ -656,11 +794,11 @@ function Register() {
           </Col>
         </Row>
 
-        <Divider Text={"III. ID & Photo Attachment"} />
+        <Divider Text={"VI. ID & Photo Attachment"} />
         <Row className="mb-2">
           <Col md={6}>
             <SectionLabel
-              Text={"21. ID photo"}
+              Text={"28. ID photo"}
               Hint={"Submit a photo of your ID"}
             />
             <IconButton
@@ -671,7 +809,7 @@ function Register() {
               className="w-full rounded-md h-72 bg-gray-200 border-dashed border-gray-500 border-2"
             >
               <AddIcon />
-              <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
+              <VisuallyHiddenInput type="file" />
             </IconButton>
 
             <div className="flex justify-between my-6">
@@ -687,7 +825,7 @@ function Register() {
           </Col>
           <Col md={6}>
             <SectionLabel
-              Text={"22. Photo Attachment"}
+              Text={"29. Photo Attachment"}
               Hint={"Submit a selfie of you holding the ID"}
             />
             <IconButton
@@ -695,28 +833,17 @@ function Register() {
               role={undefined}
               variant="contained"
               tabIndex={-1}
-              className="w-full rounded-md h-72 mb-6 bg-gray-200 border-dashed border-gray-500 border-2 opacity-50"
+              className="w-full rounded-md h-72 mb-6 bg-gray-200 border-dashed border-gray-500 border-2"
             >
               <AddIcon />
-              <img
-                src={image? URL.createObjectURL(image):null} 
-                style={{ 
-                  visibility: image ? "visible":"hidden",
-                  width:"100%",
-                  height:"100%",
-                  objectFit:"cover",
-                  position:"absolute",
-                  zIndex:-1,
-                }}
-              />
-              <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
+              <VisuallyHiddenInput type="file" />
             </IconButton>
           </Col>
         </Row>
 
-        <Divider Text={"IV. Email / Contact and Password"} />
+        <Divider Text={"VII. Email / Contact and Password"} />
 
-        <SectionLabel Text={"23. Email"} />
+        <SectionLabel Text={"30. Email"} />
         <Row>
           <Col md={12}>
             <Input
@@ -729,7 +856,7 @@ function Register() {
           </Col>
         </Row>
 
-        <SectionLabel Text={"24. Contact Number"} />
+        <SectionLabel Text={"31. Contact Number"} />
         <Row>
           <Col md={12}>
             <Input
@@ -742,7 +869,7 @@ function Register() {
           </Col>
         </Row>
 
-        <SectionLabel Text={"25. Password"} />
+        <SectionLabel Text={"32. Password"} />
         <Row className="mb-2">
           <Col md={12}>
             <Input
@@ -757,10 +884,11 @@ function Register() {
 
         <Divider
           Text={
-            "V. Confirmation to allow the storage and use of my personal data"
+            "VIII. Confirmation to allow the storage and use of my personal data"
           }
         />
 
+        <SectionLabel Text={"33. Mother's Name"} Hint={"Pangalan"} />
         <Row>
           <Col>
             <FormGroup>

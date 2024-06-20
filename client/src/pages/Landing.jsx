@@ -19,7 +19,7 @@ function Landing() {
     <>
       <Container fluid>
         {/* hero 1 */}
-        <Row justify='center' align='center' className='group py-10 bg-gradient-to-r from-purple-100 via-blue-100 to-pink-100'>
+        <Row justify='center' align='center' className='group py-10 bg-gradient-to-r from-purple-100 via-blue-100 to-pink-100 overflow-hidden'>
           <Col lg={5} className='flex flex-col md:items-start md:text-left text-center items-center justify-center py-10' >
             <h1 className='m-0 font-extrabold text-4xl leading-relaxed text-purple-800'>Your Journey to <span className='bg-purple-200'>Motherhood, Simplified</span></h1>
             <p className='mt-2 md:mb-16 text-gray-600'>A Lifestyle Upgrade for Your Pregnancy Journey</p>
@@ -65,7 +65,7 @@ function Landing() {
         </Row>
 
         {/* hero 2 */}
-        <Row justify='center' align='center' className='group py-10 bg-gradient-to-bl from-pink-100 via-white to-white'>
+        <Row justify='center' align='center' className='group py-10 bg-gradient-to-bl from-pink-100 via-white to-white overflow-hidden'>
 
         <Col lg={3} className='flex h-96 flex-col items-center justify-center select-none'>
               <span className="
@@ -114,7 +114,7 @@ function Landing() {
         </Row>
         
         {/* hero 3 */}
-        <Row justify='center' align='center' className='group py-10 relative bg-[url("https://img.freepik.com/premium-photo/young-pregnant-woman-pink-background_728202-1373.jpg?w=996")] bg-no-repeat bg-right bg-cover'>
+        <Row justify='center' align='center' className='group py-10 relative overflow-hidden bg-[url("https://img.freepik.com/premium-photo/young-pregnant-woman-pink-background_728202-1373.jpg?w=996")] bg-no-repeat bg-right bg-cover'>
           <div className='absolute left-0 h-full w-full bg-gradient-to-r from-purple-100 via-blue-100 via-60%'/>
 
           <Col lg={5} className='flex flex-col md:items-start md:text-left text-center items-center py-10' >

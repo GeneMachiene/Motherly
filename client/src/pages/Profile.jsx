@@ -3,7 +3,7 @@ import {
   TextField, Box, Typography,
   FormControl, InputLabel,
   Select, MenuItem, FormHelperText,
-  Button, styled, IconButton,
+  Button,
   Alert
 } from "@mui/material";
 import ProfileCard from "./components/profile/ProfileCard"
@@ -12,6 +12,7 @@ import {
   Container, Row, Col,
  } from 'react-grid-system';
 import { useEffect, useState } from "react";
+import ImageUpload from "./components/utility/ImageUpload";
 
 
 function Profile() {
@@ -86,22 +87,6 @@ function Profile() {
       }
   }
 
-  function selectImage(event) {
-    const image = event.target.files[0];
-    const  fileType = image['type'];
-    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-
-    if (!validImageTypes.includes(fileType)) {
-      setError("Invalid file type. Use JPEG or PNG only.")
-      return setTimeout(()=>(
-        setError(null)
-      ), 5000)
-    }
-
-    setImage(image)
-  }
-  
-
   // MODAL STYLING =====================================
   const style = {
     position: 'absolute',
@@ -117,18 +102,6 @@ function Profile() {
     minWidth: 250,
     alignItems: 'center'
   };
-
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
   // MODAL STYLING =====================================
 
   return (
@@ -144,34 +117,7 @@ function Profile() {
 
             <Typography id="modal-modal-title" variant="h6" component="h2">Add Family Member</Typography>
 
-            <IconButton
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              sx={{
-                width:100,
-                height:100,
-                backgroundColor:"whitesmoke",
-                opacity:0.8,
-                mt:3,
-              }}
-            >
-              <AddIcon />
-              <img
-                src={image? URL.createObjectURL(image):null} 
-                style={{ 
-                  visibility: image ? "visible":"hidden",
-                  width:100,
-                  height:100,
-                  objectFit:"cover",
-                  position:"absolute",
-                  zIndex:-1,
-                  borderRadius:50,
-                }}
-              />
-              <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
-            </IconButton>
+            <ImageUpload setImage={setImage} image={image} setError={setError} style={{mt:3, border:0}}/>
             <FormHelperText>Upload an avatar</FormHelperText>
 
             <TextField required fullWidth margin="normal" label="Name" value={name} onChange={(e) => (setName(e.target.value))}/>

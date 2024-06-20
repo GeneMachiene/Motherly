@@ -1,33 +1,13 @@
 import { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { useSignup } from "../hooks/useSignup";
-
+import { Container, Row, Col, ScreenClassRender } from "react-grid-system";
+import { styled, Button, Checkbox, FormControlLabel, FormGroup, IconButton, TextField } from "@mui/material";
 import AsyncSelect from "react-select/async";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Container,
-  Row,
-  Col,
-  Visible,
-  Hidden,
-  ScreenClassRender,
-} from "react-grid-system";
-import {
-  styled,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  TextField,
-} from "@mui/material";
-import { color } from "@mui/system";
+import ImageUpload from "./components/utility/ImageUpload";
+import { borderRadius } from "@mui/system";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
 
 const emptyUser = {
   email: null,
@@ -104,9 +84,12 @@ const emptyUser = {
   },
 };
 
+
 function Register() {
   const [user, updateUser] = useImmer(emptyUser);
-  const [image, setImage] = useState(null)
+  const [idImage, setIdImage] = useState(null);
+  const [dpImage, setDpImage] = useState(null);
+
   const { signup, error, isLoading } = useSignup();
 
   // for debugging purposes
@@ -293,17 +276,6 @@ function Register() {
     await signup(user);
   };
 
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
 
   return (
     <Container fluid xs sm md className="overflow-x-hidden">
@@ -663,16 +635,8 @@ function Register() {
               Text={"21. ID photo"}
               Hint={"Submit a photo of your ID"}
             />
-            <IconButton
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              className="w-full rounded-md h-72 bg-gray-200 border-dashed border-gray-500 border-2"
-            >
-              <AddIcon />
-              <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
-            </IconButton>
+
+            <ImageUpload setImage={setIdImage} image={idImage} width={"100%"} height={290} style={{borderRadius:2}}/>
 
             <div className="flex justify-between my-6">
               <img
@@ -690,27 +654,9 @@ function Register() {
               Text={"22. Photo Attachment"}
               Hint={"Submit a selfie of you holding the ID"}
             />
-            <IconButton
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              className="w-full rounded-md h-72 mb-6 bg-gray-200 border-dashed border-gray-500 border-2 opacity-50"
-            >
-              <AddIcon />
-              <img
-                src={image? URL.createObjectURL(image):null} 
-                style={{ 
-                  visibility: image ? "visible":"hidden",
-                  width:"100%",
-                  height:"100%",
-                  objectFit:"cover",
-                  position:"absolute",
-                  zIndex:-1,
-                }}
-              />
-              <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
-            </IconButton>
+
+            <ImageUpload setImage={setDpImage} image={dpImage} width={"100%"} height={290} style={{borderRadius:2}}/>
+            
           </Col>
         </Row>
 

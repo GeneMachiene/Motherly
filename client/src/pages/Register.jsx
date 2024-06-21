@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { useSignup } from "../hooks/useSignup";
 import { Container, Row, Col, ScreenClassRender } from "react-grid-system";
-import { styled, Button, Checkbox, FormControlLabel, FormGroup, IconButton, TextField } from "@mui/material";
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers";
 import AsyncSelect from "react-select/async";
-import AddIcon from "@mui/icons-material/Add";
 import ImageUpload from "./components/utility/ImageUpload";
-import { borderRadius } from "@mui/system";
-
+import Notify from "./components/utility/Notify";
+import dayjs from "dayjs";
 
 const emptyUser = {
   email: null,
@@ -24,8 +24,6 @@ const emptyUser = {
       region: null,
       province: null,
       city: null,
-      district: null,
-      barangay: null,
       residence: null,
       street: null,
     },
@@ -42,34 +40,7 @@ const emptyUser = {
     tin: null,
     gsis_or_sss: null,
   },
-  family: {
-    name_of_spouse: {
-      last_name: null,
-      first_name: null,
-      middle_name: null,
-      suffix: null,
-    },
-    name_of_father: {
-      last_name: null,
-      first_name: null,
-      middle_name: null,
-      suffix: null,
-    },
-    name_of_mother: {
-      last_name: null,
-      first_name: null,
-      middle_name: null,
-      suffix: null,
-    },
-  },
-  education: {
-    highest_educational_attainment: null,
-    technical_skills: null,
-  },
-  economic_profile: {
-    source_of_income_and_assistance: null,
-    monthly_income: null,
-  },
+  
   health_profile: {
     medical_concern: null,
     dental_concern: null,
@@ -89,6 +60,8 @@ function Register() {
   const [user, updateUser] = useImmer(emptyUser);
   const [idImage, setIdImage] = useState(null);
   const [dpImage, setDpImage] = useState(null);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [errorMessage, seterrorMessage] = useState();
 
   const { signup, error, isLoading } = useSignup();
 
@@ -97,17 +70,13 @@ function Register() {
     console.log("User changed:", user);
   }, [user]);
 
-  function selectImage(event) {
-    const image = event.target.files[0];
-    const  fileType = image['type'];
-    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-
-    if (!validImageTypes.includes(fileType)) {
-      console.log("wrong file type")
+  // Display the first Server Error
+  useEffect(() => {
+    if(error){
+      seterrorMessage(error[0].msg)
+      setSnackOpen(true);
     }
-
-    setImage(image)
-  }
+  }, [error]);
 
   const handleUserChange = (e) => {
     const { name, value } = e.target;
@@ -158,9 +127,7 @@ function Register() {
           break;
         case "personal_information.birthdate":
           draft.personal_information.birthdate = value;
-          break;
-        case "personal_information.age":
-          draft.personal_information.age = value;
+          draft.personal_information.age = dayjs().diff(value, 'year');
           break;
         case "personal_information.marital_status":
           draft.personal_information.marital_status = value;
@@ -191,54 +158,6 @@ function Register() {
           break;
         case "personal_information.gsis_or_sss":
           draft.personal_information.gsis_or_sss = value;
-          break;
-        case "family.name_of_spouse.last_name":
-          draft.family.name_of_spouse.last_name = value;
-          break;
-        case "family.name_of_spouse.first_name":
-          draft.family.name_of_spouse.first_name = value;
-          break;
-        case "family.name_of_spouse.middle_name":
-          draft.family.name_of_spouse.middle_name = value;
-          break;
-        case "family.name_of_spouse.suffix":
-          draft.family.name_of_spouse.suffix = value;
-          break;
-        case "family.name_of_father.last_name":
-          draft.family.name_of_father.last_name = value;
-          break;
-        case "family.name_of_father.first_name":
-          draft.family.name_of_father.first_name = value;
-          break;
-        case "family.name_of_father.middle_name":
-          draft.family.name_of_father.middle_name = value;
-          break;
-        case "family.name_of_father.suffix":
-          draft.family.name_of_father.suffix = value;
-          break;
-        case "family.name_of_mother.last_name":
-          draft.family.name_of_mother.last_name = value;
-          break;
-        case "family.name_of_mother.first_name":
-          draft.family.name_of_mother.first_name = value;
-          break;
-        case "family.name_of_mother.middle_name":
-          draft.family.name_of_mother.middle_name = value;
-          break;
-        case "family.name_of_mother.suffix":
-          draft.family.name_of_mother.suffix = value;
-          break;
-        case "education.highest_educational_attainment":
-          draft.education.highest_educational_attainment = value;
-          break;
-        case "education.technical_skills":
-          draft.education.technical_skills = value;
-          break;
-        case "economic_profile.source_of_income_and_assistance":
-          draft.economic_profile.source_of_income_and_assistance = value;
-          break;
-        case "economic_profile.monthly_income":
-          draft.economic_profile.monthly_income = value;
           break;
         case "health_profile.medical_concern":
           draft.health_profile.medical_concern = value;
@@ -272,10 +191,10 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
+    console.log(user);
     await signup(user);
   };
-
 
   return (
     <Container fluid xs sm md className="overflow-x-hidden">
@@ -392,7 +311,8 @@ function Register() {
           <Col md={6}>
             <Input
               onChange={handleUserChange}
-              name="Street"
+              value={user.personal_information.address.street}
+              name="personal_information.address.street"
               label="Street (Zone/Purok/Sitio) - Not required"
             />
           </Col>
@@ -403,12 +323,28 @@ function Register() {
             <SectionLabel Text={"3. Birthdate"} Hint={"Birthday"} />
             <Row>
               <Col>
-                <Input
-                  onChange={handleUserChange}
-                  name="personal_information.birthdate"
-                  value={user.personal_information.birthdate}
+                <DatePicker
                   label="Birth Date"
+                  value={user.personal_information.birthdate}
+                  onChange={(date) => handleUserChange({target: { name: "personal_information.birthdate", value: date }})}
+                  maxDate={dayjs()}
                   required
+                  sx={{
+                    width:"100%",
+                    mb:3,
+                  }}
+                  slotProps={{
+                    actionBar: {
+                      actions: ['clear'],
+                    },
+                    textField: {
+                      size:"small",
+                      InputLabelProps: {style: { color: "red", zIndex: -1 }}
+                    },
+                    field: {
+                      name:"personal_information.birthdate"
+                    }
+                  }}
                 />
               </Col>
             </Row>
@@ -418,8 +354,8 @@ function Register() {
             <Row>
               <Col>
                 <Input
-                  onChange={handleUserChange}
-                  name="Age"
+                  value={user.personal_information.age}
+                  name="personal_information.age"
                   label="Age"
                   disabled={true}
                 />
@@ -430,12 +366,21 @@ function Register() {
             <SectionLabel Text={"4. Marital Status"} Hint={"Status"} />
             <Row>
               <Col>
-                <Input
-                  onChange={handleUserChange}
-                  name="personal_information.marital_status"
-                  value={user.personal_information.marital_status}
-                  label="Marital Status"
-                />
+                <FormControl fullWidth size="small" className="mb-4" required>
+                  <InputLabel className="text-red-500">Marital Status</InputLabel>
+                  <Select 
+                    fullWidth
+                    label="Marital Status"
+                    value={user.personal_information.marital_status == null ? '':user.personal_information.marital_status}
+                    name="personal_information.marital_status"
+                    onChange={handleUserChange}
+                  >
+                    <MenuItem value="Single">Single</MenuItem>
+                    <MenuItem value="Married">Married</MenuItem>
+                    <MenuItem value="Widowed">Widowed</MenuItem>
+                    <MenuItem value="Legally Separated">Legally Separated</MenuItem>
+                  </Select>
+                </FormControl>
               </Col>
             </Row>
           </Col>
@@ -443,12 +388,21 @@ function Register() {
             <SectionLabel Text={"5. Sex"} Hint={"@ Birth"} />
             <Row>
               <Col>
-                <Input
-                  onChange={handleUserChange}
-                  name="personal_information.sex"
-                  value={user.personal_information.sex}
-                  label="Sex"
-                />
+                <FormControl fullWidth size="small" className="mb-4" required>
+                  <InputLabel className="text-red-500">Sex</InputLabel>
+                  <Select 
+                    fullWidth
+                    label="Sex"
+                    value={user.personal_information.sex == null ? '':user.personal_information.sex}
+                    name="personal_information.sex"
+                    onChange={handleUserChange}
+                  >
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                    <MenuItem value="Prefer not to say">Prefer not to say</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </Select>
+                </FormControl>
               </Col>
             </Row>
           </Col>
@@ -656,7 +610,7 @@ function Register() {
             />
 
             <ImageUpload setImage={setDpImage} image={dpImage} width={"100%"} height={290} style={{borderRadius:2}}/>
-            
+
           </Col>
         </Row>
 
@@ -692,6 +646,7 @@ function Register() {
         <Row className="mb-2">
           <Col md={12}>
             <Input
+              type="password"
               onChange={handleUserChange}
               name="password"
               value={user.password}
@@ -743,6 +698,12 @@ function Register() {
           </Col>
         </Row>
       </form>
+
+      <Notify
+        open={snackOpen}
+        setOpen={setSnackOpen}
+        message={errorMessage || ""}
+      />
     </Container>
   );
 }
@@ -758,12 +719,14 @@ function Divider({ Text }) {
     </Row>
   );
 }
-function Input({ onChange, name, value, label, required, disabled }) {
+function Input({ onChange, name, value, label, required, disabled, type }) {
   return (
     <TextField
+      size="small"
+      type={type}
       onChange={onChange}
       name={name}
-      value={value}
+      value={value == null ? '' : value}
       fullWidth
       required={required}
       disabled={disabled}
@@ -773,7 +736,6 @@ function Input({ onChange, name, value, label, required, disabled }) {
           ? { style: { color: "red", zIndex: -1 } }
           : { style: { zIndex: -1 } }
       }
-      size="small"
       sx={{ mb: 3 }}
     />
   );

@@ -27,11 +27,11 @@ const userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "City",
       },
-      barangay: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Barangay",
-      },
-      district: { type: String, maxlength: 100 },
+      // barangay: {
+      //   type: mongoose.Schema.Types.ObjectId,
+      //   ref: "Barangay",
+      // },
+      // district: { type: String, maxlength: 100 },
       residence: { type: String, required: true, maxlength: 300 },
       street: { type: String, maxlength: 100 },
     },
@@ -56,34 +56,34 @@ const userSchema = new Schema({
     tin: { type: String, maxlength: 50 },
     gsis_or_sss: { type: String, maxlength: 50 },
   },
-  family: {
-    name_of_spouse: {
-      last_name: { type: String, maxlength: 100 },
-      first_name: { type: String, maxlength: 100 },
-      middle_name: { type: String, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 },
-    },
-    name_of_father: {
-      last_name: { type: String, maxlength: 100 },
-      first_name: { type: String, maxlength: 100 },
-      middle_name: { type: String, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 },
-    },
-    name_of_mother: {
-      last_name: { type: String, maxlength: 100 },
-      first_name: { type: String, maxlength: 100 },
-      middle_name: { type: String, maxlength: 100 },
-      suffix: { type: String, maxlength: 20 },
-    },
-  },
-  education: {
-    highest_educational_attainment: { type: String, maxlength: 50 },
-    technical_skills: { type: String, maxlength: 400 },
-  },
-  economic_profile: {
-    source_of_income_and_assistance: { type: String, maxlength: 200 },
-    monthly_income: { type: Number },
-  },
+  // family: {
+  //   name_of_spouse: {
+  //     last_name: { type: String, maxlength: 100 },
+  //     first_name: { type: String, maxlength: 100 },
+  //     middle_name: { type: String, maxlength: 100 },
+  //     suffix: { type: String, maxlength: 20 },
+  //   },
+  //   name_of_father: {
+  //     last_name: { type: String, maxlength: 100 },
+  //     first_name: { type: String, maxlength: 100 },
+  //     middle_name: { type: String, maxlength: 100 },
+  //     suffix: { type: String, maxlength: 20 },
+  //   },
+  //   name_of_mother: {
+  //     last_name: { type: String, maxlength: 100 },
+  //     first_name: { type: String, maxlength: 100 },
+  //     middle_name: { type: String, maxlength: 100 },
+  //     suffix: { type: String, maxlength: 20 },
+  //   },
+  // },
+  // education: {
+  //   highest_educational_attainment: { type: String, maxlength: 50 },
+  //   technical_skills: { type: String, maxlength: 400 },
+  // },
+  // economic_profile: {
+  //   source_of_income_and_assistance: { type: String, maxlength: 200 },
+  //   monthly_income: { type: Number },
+  // },
   health_profile: {
     medical_concern: { type: String, maxlength: 100 },
     dental_concern: { type: String, maxlength: 100 },

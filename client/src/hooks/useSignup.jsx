@@ -19,8 +19,9 @@ export const useSignup = () => {
 
     if (!response.ok) {
       setIsLoading(false);
-      setError(json.error);
-      console.log(json.error);
+      setError(json.errors)
+      
+      console.log(json.errors);
     }
     if (response.ok) {
       // save user to locak storage

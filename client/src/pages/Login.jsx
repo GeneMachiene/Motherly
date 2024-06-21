@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
 import { Button, CircularProgress, TextField } from '@mui/material';
-import DataUsageIcon from '@mui/icons-material/DataUsage';
 import { 
   Container, Row, Col,
   Visible, Hidden

@@ -30,26 +30,26 @@ const validateAndSanitizeUser = () => {
       .isString()
       .withMessage("Suffix must be a string"),
     body("personal_information.address.region")
-      .optional()
+      .optional({ checkFalsy: true })
       .isMongoId()
       .withMessage("Region must be a valid MongoDB ID"),
     body("personal_information.address.province")
-      .optional()
+      .optional({ checkFalsy: true })
       .isMongoId()
       .withMessage("Province must be a valid MongoDB ID"),
     body("personal_information.address.city")
-      .optional()
+      .optional({ checkFalsy: true })
       .isMongoId()
       .withMessage("City must be a valid MongoDB ID"),
-    body("personal_information.address.district")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("District must be a string"),
-    body("personal_information.address.barangay")
-      .optional()
-      .isMongoId()
-      .withMessage("Barangay must be a valid MongoDB ID"),
+    // body("personal_information.address.district")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("District must be a string"),
+    // body("personal_information.address.barangay")
+    //   .optional()
+    //   .isMongoId()
+    //   .withMessage("Barangay must be a valid MongoDB ID"),
     body("personal_information.address.residence")
       .trim()
       .isString()
@@ -111,66 +111,102 @@ const validateAndSanitizeUser = () => {
       .trim()
       .isString()
       .withMessage("GSIS/SSS must be a string"),
-    body("family.name_of_spouse.last_name")
+    // body("family.name_of_spouse.last_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Spouse last name must be a string"),
+    // body("family.name_of_spouse.first_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Spouse first name must be a string"),
+    // body("family.name_of_spouse.middle_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Spouse middle name must be a string"),
+    // body("family.name_of_spouse.suffix")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Spouse suffix must be a string"),
+    // body("family.name_of_father.last_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Father last name must be a string"),
+    // body("family.name_of_father.first_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Father first name must be a string"),
+    // body("family.name_of_father.middle_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Father middle name must be a string"),
+    // body("family.name_of_father.suffix")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Father suffix must be a string"),
+    // body("family.name_of_mother.last_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Mother last name must be a string"),
+    // body("family.name_of_mother.first_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Mother first name must be a string"),
+    // body("family.name_of_mother.middle_name")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Mother middle name must be a string"),
+    // body("family.name_of_mother.suffix")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Mother suffix must be a string"),
+    body("health_profile.medical_concern")
       .optional()
       .trim()
       .isString()
-      .withMessage("Spouse last name must be a string"),
-    body("family.name_of_spouse.first_name")
+      .withMessage("Medical Concern must be a string"),
+    body("health_profile.dental_concern")
       .optional()
       .trim()
       .isString()
-      .withMessage("Spouse first name must be a string"),
-    body("family.name_of_spouse.middle_name")
+      .withMessage("Dental Concern must be a string"),
+    body("health_profile.social_or_emotional")
       .optional()
       .trim()
       .isString()
-      .withMessage("Spouse middle name must be a string"),
-    body("family.name_of_spouse.suffix")
+      .withMessage("Social/Emotional must be a string"),
+    body("health_profile.health_problems_or_ailment")
       .optional()
       .trim()
       .isString()
-      .withMessage("Spouse suffix must be a string"),
-    body("family.name_of_father.last_name")
+      .withMessage("Health Problems / Ailment must be a string"),
+    body("health_profile.visual_or_hearing_condition")
       .optional()
       .trim()
       .isString()
-      .withMessage("Father last name must be a string"),
-    body("family.name_of_father.first_name")
+      .withMessage("Visual / Hearing Condition must be a string"),
+    body("health_profile.area_of_difficulty")
       .optional()
       .trim()
       .isString()
-      .withMessage("Father first name must be a string"),
-    body("family.name_of_father.middle_name")
-      .optional()
-      .trim()
+      .withMessage("Area of Difficulty must be a string"),
+    body("photo_references.id")
       .isString()
-      .withMessage("Father middle name must be a string"),
-    body("family.name_of_father.suffix")
-      .optional()
-      .trim()
+      .withMessage("ID photo is required"),
+    body("photo_references.selfie")
       .isString()
-      .withMessage("Father suffix must be a string"),
-    body("family.name_of_mother.last_name")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("Mother last name must be a string"),
-    body("family.name_of_mother.first_name")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("Mother first name must be a string"),
-    body("family.name_of_mother.middle_name")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("Mother middle name must be a string"),
-    body("family.name_of_mother.suffix")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("Mother suffix must be a string"),
+      .withMessage("Photo Attachment is required"),    
   ];
 };
 

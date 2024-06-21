@@ -3,7 +3,7 @@ import { useLogout } from "../../hooks/useLogout"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { NavLink } from "react-router-dom"
 
-import { Avatar,Chip,Divider,Snackbar } from "@mui/material";
+import { Avatar, Chip, Divider } from "@mui/material";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import MenuIcon from '@mui/icons-material/Menu';
+import Notify from "./utility/Notify";
 
 function Header() {
   const { logout } = useLogout()
@@ -43,14 +44,6 @@ function Header() {
   const handleClose = () => {
     setAnchorContact(null);
     setAnchorMenu(null);
-  };
-
-  const snackClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackOpen(false);
   };
 
 
@@ -156,10 +149,9 @@ function Header() {
         </Menu>
       </div>
 
-      <Snackbar
+      <Notify 
         open={snackOpen}
-        autoHideDuration={3000}
-        onClose={snackClose}
+        setOpen={setSnackOpen}
         message="Text Copied to clipboard"
       />
     </div>

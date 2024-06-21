@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import createCache from '@emotion/cache';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AuthContextProvider } from './context/AuthContext.jsx'
 import { CacheProvider } from '@emotion/react';
 
@@ -22,7 +24,9 @@ root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <CacheProvider value={cache}>
-        <App />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <App />
+        </LocalizationProvider>
       </CacheProvider>
     </AuthContextProvider>
   </React.StrictMode>

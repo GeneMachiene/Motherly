@@ -76,16 +76,16 @@ const validateAndSanitizeUser = () => {
       .trim()
       .isString()
       .withMessage("Place of birth must be a string"),
-    body("personal_information.contact_one")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("Contact one must be a string"),
-    body("personal_information.contact_two")
-      .optional()
-      .trim()
-      .isString()
-      .withMessage("Contact two must be a string"),
+    // body("personal_information.contact_one")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Contact one must be a string"),
+    // body("personal_information.contact_two")
+    //   .optional()
+    //   .trim()
+    //   .isString()
+    //   .withMessage("Contact two must be a string"),
     body("personal_information.messenger_name")
       .optional()
       .trim()

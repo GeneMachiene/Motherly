@@ -30,5 +30,27 @@ const getImage = async (req, res) => {
   }
 }
 
+// delete image
+const deleteImage = async (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(process.cwd(), 'uploads', filename);
+  console.log(`Attempting to delete ${filePath}`);
 
-module.exports = {getImage, getPath}
+  try {
+    // Check if the file exists before attempting to delete it
+    await fs.promises.access(filePath);
+    
+  
+    fs.unlink(filePath, (err) => {
+      if (err) throw err;
+      console.log(`File "${filename}" deleted`);
+    })
+
+    res.status(200).send(`File "${filename}" deleted`);
+    
+  } catch (err) {
+    res.status(404).send('File not found');
+  }
+}
+
+module.exports = {getImage, getPath, deleteImage}

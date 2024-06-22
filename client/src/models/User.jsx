@@ -50,9 +50,7 @@ export const User = () => {
 
   const handleUserChange = (e) => {
     const { name, value } = e.target;
-
-    console.log(name, value);
-
+    
     updateUser((draft) => {
       switch (name) {
         case "email":

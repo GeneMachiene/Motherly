@@ -5,7 +5,7 @@ const fs = require('fs')
 
 
 // controller functions
-const {getImage, getPath} = require('../controllers/apiController') 
+const {getImage, getPath, deleteImage} = require('../controllers/apiController') 
 const router = express.Router()
 
 
@@ -30,5 +30,8 @@ router.post('/upload', upload.single('file'), getPath)
 
 // Read
 router.get('/file/:filename', getImage)
+
+// delete
+router.delete('/file/:filename', deleteImage)
 
 module.exports = router

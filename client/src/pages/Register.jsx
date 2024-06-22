@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useImmer } from "use-immer";
 import { useSignup } from "../hooks/useSignup";
 import { Container, Row, Col } from "react-grid-system";
-import { Checkbox, Fab, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Checkbox, CircularProgress, Fab, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers";
+import { User } from '../models/User';
 import AsyncSelect from "react-select/async";
 import ImageUpload from "./components/utility/ImageUpload";
 import Notify from "./components/utility/Notify";
 import dayjs from "dayjs";
 import TaskIcon from '@mui/icons-material/Task';
-import { User } from '../models/User';
 
 
 function Register() {
@@ -20,14 +19,14 @@ function Register() {
   const { signup, error, isLoading } = useSignup();
 
   // for debugging purposes
-  useEffect(() => {
-    console.log("User changed:", user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("User changed:", user);
+  // }, [user]);
 
   // Display the first Server Error
   useEffect(() => {
     if(error){
-      seterrorMessage(error[0].msg)
+      seterrorMessage(Array.isArray(error)? error[0].msg : error)
       setSnackOpen(true);
     }
   }, [error]);
@@ -35,8 +34,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log(user);
-    await signup(user);
+    await signup({...user});
   };
 
   return (
@@ -48,6 +46,7 @@ function Register() {
         <PersonalInfo handleUserChange={handleUserChange} user={user} className="bg-slate-700"/>
         <HealthProfile handleUserChange={handleUserChange} user={user} />
         <PhotoID handleUserChange={handleUserChange} user={user} />
+        <EmailPass handleUserChange={handleUserChange} user={user} />
         <Confirmation />
 
         <Fab
@@ -57,7 +56,7 @@ function Register() {
           disabled={isLoading}
           className="fixed bottom-4 right-3 mr-2 bg-gradient-to-r from-purple-700 to-pink-600 text-white"
         >
-          <TaskIcon fontSize="medium" sx={{ mr: 1}}/>
+          {isLoading? <CircularProgress size={25} color="inherit" className="mr-3" />:<TaskIcon fontSize="medium" sx={{ mr: 1}}/>}
           <span className="font-semibold">Submit</span>
         </Fab>
       </form>
@@ -470,10 +469,18 @@ function HealthProfile({handleUserChange, user}) {
     </>
   )
 }
-function PhotoID({handleUserChange, user}){
+function PhotoID({handleUserChange}){
   const [idImage, setIdImage] = useState(null);
   const [dpImage, setDpImage] = useState(null);
 
+  useEffect(()=>{
+    handleUserChange({target:{name:"photo_references.id", value:idImage}})
+  },[handleUserChange, idImage])
+
+  useEffect(()=>{
+    handleUserChange({target:{name:"photo_references.selfie", value:dpImage}})
+  },[handleUserChange, dpImage])
+  
   return(
     <>
       <Divider Text={"III. ID & Photo Attachment"} />
@@ -507,7 +514,13 @@ function PhotoID({handleUserChange, user}){
 
         </Col>
       </Row>
+    </>
+  )
+}
+function EmailPass({handleUserChange, user}){
 
+  return(
+    <>
       <Divider Text={"IV. Email / Contact and Password"} />
 
       <SectionLabel Text={"20. Email"} />

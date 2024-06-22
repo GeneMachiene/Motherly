@@ -13,6 +13,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import MenuIcon from '@mui/icons-material/Menu';
 import Notify from "./utility/Notify";
+import { Box } from "@mui/system";
 
 function Header() {
   const { logout } = useLogout()
@@ -89,7 +90,7 @@ function Header() {
                   <Avatar 
                     sx={{ width: 26, height: 26 }}
                     alt={user.email}
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" 
+                    src={`${import.meta.env.VITE_SERVER}/api/file/${user.image}`}
                   />
                 }
                 label={user.email}
@@ -112,7 +113,8 @@ function Header() {
             <Avatar 
               sx={{ width: 26, height: 26 }}  
               alt={user.email}
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              src={`${import.meta.env.VITE_SERVER}/api/file/${user.image}`}
+            />
           </NavLink>
           :
           <></>
@@ -144,8 +146,13 @@ function Header() {
           <MenuItem>&emsp;Email</MenuItem>
           <MenuItem onClick={copyClick}>&emsp;Phone: +63 912 345 6789</MenuItem>
           <Divider/>
-          <MenuItem onClick={()=>(location.href = "/signup")}>Signup</MenuItem>
-          <MenuItem onClick={()=>(location.href = "/login")}>Login</MenuItem>
+          {user ?
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>:
+            <Box>
+              <MenuItem onClick={()=>(location.href = "/signup")}>Signup</MenuItem>
+              <MenuItem onClick={()=>(location.href = "/login")}>Login</MenuItem>
+            </Box>
+          }
         </Menu>
       </div>
 

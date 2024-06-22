@@ -1,20 +1,20 @@
-import { IconButton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Chip, IconButton } from "@mui/material";
 import { styled } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 
-function ImageUpload({image, setImage, setError, width=100, height=100, style={}}) {
+function ImageUpload({image, setImage, setError, width=100, height=100, style={}, required=false}) {
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
     height: 1,
+    width: 1,
     overflow: "hidden",
     position: "absolute",
     bottom: 0,
     left: 0,
     whiteSpace: "nowrap",
-    width: 1,
   });
 
   function selectImage(event) {
@@ -54,7 +54,9 @@ function ImageUpload({image, setImage, setError, width=100, height=100, style={}
         ...style
       }}
     >
-      <AddIcon />
+      {required?
+      <Chip icon={<AddIcon/>} label="Required" color="error"/>:
+      <AddIcon />}
       <img
         src={image? URL.createObjectURL(image):null} 
         style={{ 
@@ -65,7 +67,7 @@ function ImageUpload({image, setImage, setError, width=100, height=100, style={}
           position:"absolute",
           zIndex:-1,
         }} />
-      <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} />
+      <VisuallyHiddenInput type="file" accept="image/*" onChange={selectImage} required={image? false:true}/>
     </IconButton>
   )
 }

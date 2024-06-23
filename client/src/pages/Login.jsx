@@ -37,9 +37,9 @@ function Login() {
                 }}>
 
                 <a href="/">
-                    <img src="/logo.svg" alt="Motherly Logo" className="h-6"/>
+                    <img src="/logo.svg" alt="Motherly Logo" className="h-7"/>
                 </a>
-                <h1 className='p-0 mt-10 font-bold tracking-wide'>START TRACKING</h1>
+                <h1 className='p-0 mt-0 font-bold tracking-wide'>START TRACKING</h1>
                 <p className="m-0 text-justify">Welcome to Motherly, the ultimate companion app for moms to effortlessly track and manage their childrens health, from baby book milestones to recent checkups and medical records, all in one convenient place.</p>
               </Col>
             </Hidden>
@@ -50,8 +50,8 @@ function Login() {
                 justifyContent:'center',
                 alignItems:'center',
                 height:'100vh',
-                background: 'radial-gradient(circle at 10% 20%, rgb(126, 70, 195) 0%, rgb(156, 236, 247) 90%)'
-              }}>
+              }}
+              className='bg-gradient-to-br from-purple-300 via-blue-300 to-pink-100'>
 
               <div className="w-full h-96 p-10 max-w-sm shadow-2xl bg-slate-50 rounded-sm">
 

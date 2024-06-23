@@ -205,6 +205,28 @@ function Landing() {
             </Card>
           </Col>
         </Row>
+
+        {/* about motherly */}
+        <Row justify='center' align='center' className='group py-3 bg-gradient-to-r from-pink-200 to-pink-400 overflow-hidden'>
+
+          <Col lg={3}  className='flex h-52 flex-col items-center justify-center select-none'>
+              <img src="icon.svg" alt='dashboard' 
+                className='
+                          h-40 w-40 p-3 z-10 object-cover
+                          rounded-full
+                          shadow-sm
+                          group-hover:shadow-2xl
+                          group-hover:scale-105
+                          md:group-hover:-translate-x-2
+                          transition ease-out duration-700'/>
+          </Col>
+
+          <Col lg={5}  className='flex flex-col md:items-end md:text-right text-center items-center justify-center py-10' >
+            <p className=' text-purple-950 pl-8 font-semibold border-0 border-r pr-2 border-solid border-pink-700'>Motherly is the ultimate companion app for moms to effortlessly track and manage their children&apos;s health, from baby book milestones to recent checkups and medical records, all in one convenient place.</p>
+          </Col>
+
+        </Row>
+
       </Container>
 
       {/* footer */}

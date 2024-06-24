@@ -9,6 +9,7 @@ import { AuthContextProvider } from './context/AuthContext.jsx'
 import { CacheProvider } from '@emotion/react';
 
 import './index.css'
+import { BrowserRouter } from 'react-router-dom';
 
 
 
@@ -22,12 +23,14 @@ const cache = createCache({
 
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <CacheProvider value={cache}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <App />
-        </LocalizationProvider>
-      </CacheProvider>
-    </AuthContextProvider>
+    <BrowserRouter>
+      <AuthContextProvider>
+        <CacheProvider value={cache}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <App />
+          </LocalizationProvider>
+        </CacheProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
   </React.StrictMode>
 )

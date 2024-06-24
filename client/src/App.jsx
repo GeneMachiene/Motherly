@@ -1,18 +1,24 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuthContext } from './hooks/useAuthContext'
+import { useLocation } from 'react-router-dom';
 import Landing from './pages/Landing'
 import Header from './pages/components/Header'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Register from './pages/Register'
-import Signup from './pages/Signup'
+import AboutUs from './pages/AboutUs'
+import FAQs from './pages/FAQs'
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const currentURI = window.location.href.split('/').at(-1);
-  const inAuth = currentURI == "login" || currentURI == "signup";
+  // const currentURI = window.location.href.split('/').at(-1);
+  const currentURI = useLocation().pathname;
+
+  const inAuth = currentURI == "/login" || currentURI == "/signup";
+  const { user } = useAuthContext();
 
   return (
     <div className="grid grid-rows-12 h-screen">
-      <BrowserRouter>
 
       {inAuth ? 
         <></>
@@ -26,12 +32,14 @@ function App() {
           <Routes>
             <Route path='/' element={<Landing />}/>
             <Route path='/login' element={<Login />}/>
-            <Route path='/signup' element={<Register />}/>
-            <Route path='/profile' element={<Profile />}/>
+            <Route path='/aboutus' element={<AboutUs />}/>
+            <Route path='/faqs' element={<FAQs />}/>
+            <Route path='/dashboard' element={<Dashboard />}/>
+            <Route path='/signup' element={!user ? <Register /> : <Navigate to="/" replace={true} />}/>
+            <Route path='/profile' element={user? <Profile /> : <Navigate to={"/login"} />}/>
           </Routes>
         </div>
 
-      </BrowserRouter>
     </div>
   )
 }

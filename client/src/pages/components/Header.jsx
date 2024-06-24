@@ -55,9 +55,9 @@ function Header() {
       </NavLink>
 
       <div className="hidden lg:flex xl:flex">
-        <Button>Home</Button>
-        <Button>About Us</Button>
-        <Button>FAQ&apos;s</Button>
+        <NavLink to={"/dashboard"}><Button>Home</Button></NavLink>
+        <NavLink to={"/aboutus"}><Button>About Us</Button></NavLink>
+        <NavLink to={"/faqs"}><Button>FAQ&apos;s</Button></NavLink>
         <Button
           id="basic-button"
           aria-controls={contactOpen ? 'basic-menu' : undefined}
@@ -101,8 +101,8 @@ function Header() {
           </>
           :
           <>
-            <Button onClick={()=>(location.href = "/signup")} variant="text">Signup</Button>
-            <Button onClick={()=>(location.href = "/login")} variant="contained">Login</Button>
+           <NavLink to={"/signup"}><Button variant="text">Signup</Button></NavLink>
+            <NavLink to={"/login"}><Button variant="contained">Login</Button></NavLink>
           </>
         }
       </div>
@@ -139,9 +139,9 @@ function Header() {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem>Home</MenuItem>
-          <MenuItem>About Us</MenuItem>
-          <MenuItem>FAQ&apos;s</MenuItem>
+          <NavLink to={"/dashboard"}><MenuItem>Home</MenuItem></NavLink>
+          <NavLink to={"/aboutus"}><MenuItem>About Us</MenuItem></NavLink>
+          <NavLink to={"/faqs"}><MenuItem>FAQ&apos;s</MenuItem></NavLink>
           <MenuItem>Contact Us</MenuItem>
           <MenuItem>&emsp;Email</MenuItem>
           <MenuItem onClick={copyClick}>&emsp;Phone: +63 912 345 6789</MenuItem>
@@ -149,8 +149,8 @@ function Header() {
           {user ?
             <MenuItem onClick={handleLogout}>Logout</MenuItem>:
             <Box>
-              <MenuItem onClick={()=>(location.href = "/signup")}>Signup</MenuItem>
-              <MenuItem onClick={()=>(location.href = "/login")}>Login</MenuItem>
+              <NavLink to={"/signup"}><MenuItem>Signup</MenuItem></NavLink>
+              <NavLink to={"/login"}><MenuItem>Login</MenuItem></NavLink>
             </Box>
           }
         </Menu>

@@ -11,11 +11,15 @@ import AddIcon from '@mui/icons-material/Add';
 import { 
   Container, Row, Col,
  } from 'react-grid-system';
+import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect, useState } from "react";
 import ImageUpload from "./components/utility/ImageUpload";
 
 
 function Profile() {
+
+  const { user } = useAuthContext()
+
   const [addOpen, setAddOpen] = useState(false);
   const [relationship, setRelationship] = useState('');
   const [name, setName] = useState('')
@@ -163,7 +167,7 @@ function Profile() {
             </div>
             <div className="card w-full gap-y-7">
               <ProfileCard 
-                image={"http://localhost:3000/api/file/file-1718009790380-32139975.png"}
+                image={user ? `${import.meta.env.VITE_SERVER}/api/file/${user.image}`:""}
                 name={"Mary Stewart"}
                 role={"Mother"}
                 bio={"Happy mother of 3 beautiful children. I work a part time job and love cooking and cleaning as a hobby."}

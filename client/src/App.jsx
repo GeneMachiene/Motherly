@@ -28,6 +28,10 @@ function App() {
             <Route path='/login' element={<Login />}/>
             <Route path='/signup' element={<Register />}/>
             <Route path='/profile' element={<Profile />}/>
+            <Route path='/locations/' element={}/>
+            <Route path='/locations/' element={}/>
+            <Route path='/locations/' element={}/>
+            <Route path='/locations/' element={}/>
           </Routes>
         </div>
 

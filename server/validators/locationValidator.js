@@ -5,8 +5,10 @@ const validateAndSanitizeRegion = () => {
     .trim()
     .isString()
     .withMessage("Name must be a string")
-    .isLength({ max: 100 })
-    .withMessage("Name must not exceed 100 characters");
+    .exists({ checkFalsy: true })
+    .withMessage("Name is required")
+    .isLength({ min: 1, max: 100 })
+    .withMessage("Name must be between 1 and 100 characters");
 };
 
 const validateAndSanitizeProvince = (action) => {
@@ -16,8 +18,10 @@ const validateAndSanitizeProvince = (action) => {
         .trim()
         .isString()
         .withMessage("Name must be a string")
-        .isLength({ max: 100 })
-        .withMessage("Name must not exceed 100 characters"),
+        .exists({ checkFalsy: true })
+        .withMessage("Name is required")
+        .isLength({ min: 1, max: 100 })
+        .withMessage("Name must be between 1 and 100 characters"),
       body("region")
         .isMongoId()
         .withMessage("Region must be a valid MongoDB ID"),
@@ -27,8 +31,10 @@ const validateAndSanitizeProvince = (action) => {
       .trim()
       .isString()
       .withMessage("Name must be a string")
-      .isLength({ max: 100 })
-      .withMessage("Name must not exceed 100 characters");
+      .exists({ checkFalsy: true })
+      .withMessage("Name is required")
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Name must be between 1 and 100 characters");
   }
 };
 
@@ -39,8 +45,10 @@ const validateAndSanitizeCity = (action) => {
         .trim()
         .isString()
         .withMessage("Name must be a string")
-        .isLength({ max: 100 })
-        .withMessage("Name must not exceed 100 characters"),
+        .exists({ checkFalsy: true })
+        .withMessage("Name is required")
+        .isLength({ min: 1, max: 100 })
+        .withMessage("Name must be between 1 and 100 characters"),
       body("province")
         .isMongoId()
         .withMessage("Province must be a valid MongoDB ID"),
@@ -50,8 +58,10 @@ const validateAndSanitizeCity = (action) => {
       .trim()
       .isString()
       .withMessage("Name must be a string")
-      .isLength({ max: 100 })
-      .withMessage("Name must not exceed 100 characters");
+      .exists({ checkFalsy: true })
+      .withMessage("Name is required")
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Name must be between 1 and 100 characters");
   }
 };
 
@@ -62,8 +72,10 @@ const validateAndSanitizeBarangay = (action) => {
         .trim()
         .isString()
         .withMessage("Name must be a string")
-        .isLength({ max: 100 })
-        .withMessage("Name must not exceed 100 characters"),
+        .exists({ checkFalsy: true })
+        .withMessage("Name is required")
+        .isLength({ min: 1, max: 100 })
+        .withMessage("Name must be between 1 and 100 characters"),
       body("city").isMongoId().withMessage("City must be a valid MongoDB ID"),
     ];
   } else if (action === "update") {
@@ -71,8 +83,10 @@ const validateAndSanitizeBarangay = (action) => {
       .trim()
       .isString()
       .withMessage("Name must be a string")
-      .isLength({ max: 100 })
-      .withMessage("Name must not exceed 100 characters");
+      .exists({ checkFalsy: true })
+      .withMessage("Name is required")
+      .isLength({ min: 1, max: 100 })
+      .withMessage("Name must be between 1 and 100 characters");
   }
 };
 

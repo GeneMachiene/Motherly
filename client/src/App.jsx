@@ -5,10 +5,10 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Signup from "./pages/Signup";
-import Regions from "./pages/locations/Region";
-import Provinces from "./pages/locations/Province";
-import Citys from "./pages/locations/City";
-import Barangays from "./pages/locations/Barangay";
+import Regions from "./pages/locations/Regions";
+import Provinces from "./pages/locations/Provinces";
+import Cities from "./pages/locations/Cities";
+import Barangays from "./pages/locations/Barangays";
 
 function App() {
   const currentURI = window.location.href.split("/").at(-1);
@@ -39,7 +39,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/locations/regions" element={<Regions />} />
             <Route path="/locations/provinces" element={<Provinces />} />
-            <Route path="/locations/cities" element={<Citys />} />
+            <Route path="/locations/cities" element={<Cities />} />
             <Route path="/locations/barangays" element={<Barangays />} />
           </Routes>
         </div>

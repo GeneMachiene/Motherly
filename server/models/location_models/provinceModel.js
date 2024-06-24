@@ -2,14 +2,17 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const provinceSchema = new Schema({
-  name: { type: String, required: true, maxlength: 100 },
-  region: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Region",
-    required: true,
+const provinceSchema = new Schema(
+  {
+    name: { type: String, required: true, maxlength: 100 },
+    region: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Region",
+      required: true,
+    },
   },
-});
+  { timestamps: true }
+);
 
 provinceSchema.statics.add = async function (province) {
   const regionExists = await mongoose

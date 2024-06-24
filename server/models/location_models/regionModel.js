@@ -2,9 +2,12 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const regionSchema = new Schema({
-  name: { type: String, required: true, maxlength: 100 },
-});
+const regionSchema = new Schema(
+  {
+    name: { type: String, required: true, maxlength: 100 },
+  },
+  { timestamps: true }
+);
 
 regionSchema.statics.update = async function (id, name) {
   const result = await this.findByIdAndUpdate(id, { name }).exec();

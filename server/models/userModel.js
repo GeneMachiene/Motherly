@@ -96,6 +96,11 @@ const userSchema = new Schema({
     id: { type: String, maxlength: 100 },
     selfie: { type: String, maxlength: 100 },
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 });
 
 // static signup method

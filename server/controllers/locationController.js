@@ -27,6 +27,7 @@ const location_list = async (req, res) => {
                 return {
                   _id: city._id,
                   name: city.name,
+                  updateAt: city.updatedAt,
                   barangays: barangays.map((barangay) => ({
                     _id: barangay._id,
                     name: barangay.name,
@@ -38,6 +39,7 @@ const location_list = async (req, res) => {
             return {
               _id: province._id,
               name: province.name,
+              updateAt: province.updatedAt,
               cities: citiesWithBarangays,
             };
           })
@@ -46,6 +48,7 @@ const location_list = async (req, res) => {
         return {
           _id: region._id,
           name: region.name,
+          updateAt: region.updatedAt,
           provinces: provincesWithCities,
         };
       })

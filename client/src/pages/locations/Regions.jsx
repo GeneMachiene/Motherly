@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   MRT_EditActionButtons,
   MaterialReactTable,
@@ -33,7 +33,7 @@ const usStates = () => {
   return null;
 };
 
-const fetchedUsers = [{ id: 2, name: "Night City" }];
+// const fetchedUsers = [{ id: 2, name: "Night City" }];
 const isLoadingUsersError = false;
 const isLoadingUsers = false;
 const isCreatingUser = false;
@@ -42,7 +42,30 @@ const isDeletingUser = false;
 const isFetchingUsers = false;
 
 function Regions() {
+  const [regions, setRegions] = useState([{ id: 1, name: "CALABARZON" }]);
   const [validationErrors, setValidationErrors] = useState({});
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch(
+          import.meta.env.VITE_SERVER + "/locations"
+        );
+        if (!response.ok) {
+          // Handle bad response
+          throw new Error("Failed to fetch locations");
+          // return;
+        }
+        const locations = await response.json();
+        setRegions(locations);
+      } catch (error) {
+        // Handle error
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -69,17 +92,17 @@ function Regions() {
         },
       },
       {
-        accessorKey: "dateModified",
+        accessorKey: "updatedAt",
         header: "Date Modified",
         muiEditTextFieldProps: {
           required: true,
-          error: !!validationErrors?.dateModified,
-          helperText: validationErrors?.dateModified,
+          error: !!validationErrors?.updatedAt,
+          helperText: validationErrors?.updatedAt,
           //remove any previous validation errors when user focuses on the input
           onFocus: () =>
             setValidationErrors({
               ...validationErrors,
-              dateModified: undefined,
+              updatedAt: undefined,
             }),
         },
       },
@@ -137,7 +160,8 @@ function Regions() {
 
   const table = useMaterialReactTable({
     columns,
-    data: fetchedUsers,
+    // data: fetchedUsers,
+    data: regions,
     createDisplayMode: "modal", //default ('row', and 'custom' are also available)
     editDisplayMode: "modal", //default ('row', 'cell', 'table', and 'custom' are also available)
     enableEditing: true,

@@ -2,7 +2,14 @@ const { validationResult } = require("express-validator");
 const Appointment = require("../models/appointmentModel");
 const appointmentValidator = require("../validators/appointmentValidator");
 
-const appointment_list = async (req, res) => {};
+const appointment_list = async (req, res) => {
+  try {
+    const appointments = await Appointment.find();
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(400).json({ error: "Error fetching appointments" });
+  }
+};
 
 const appointment_create = [
   appointmentValidator.validateAndSanitizeAppointment(),

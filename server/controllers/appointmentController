@@ -1,0 +1,13 @@
+const { validationResult } = require("express-validator");
+
+const appointment_list = (req, res) => {};
+
+const appointment_create = (req, res) => {};
+
+const appointment_delete = (req, res) => {};
+
+module.exports = {
+  appointment_list,
+  appointment_create,
+  appointment_delete,
+};

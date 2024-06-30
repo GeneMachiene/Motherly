@@ -24,8 +24,7 @@ const validateAndSanitizeAppointment = () => {
       .isLength({ max: 1000 })
       .withMessage("Purpose is too long"),
     body("status")
-      .exists({ checkFalsy: true })
-      .withMessage("Status is required")
+      .optional()
       .isString()
       .withMessage("Status must be a string")
       .isIn(["Pending", "Finished", "Cancelled"])

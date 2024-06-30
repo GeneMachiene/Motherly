@@ -1,8 +1,27 @@
 const { validationResult } = require("express-validator");
+const Appointment = require("../models/appointmentModel");
+const appointmentValidator = require("../validators/appointmentValidator");
 
-const appointment_list = (req, res) => {};
+const appointment_list = async (req, res) => {};
 
-const appointment_create = (req, res) => {};
+const appointment_create = [
+  appointmentValidator.validateAndSanitizeAppointment(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      await Appointment.create(req.body);
+      return res
+        .status(200)
+        .json({ message: "Appointment added successfully" });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+];
 
 const appointment_delete = (req, res) => {};
 

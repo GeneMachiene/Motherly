@@ -30,7 +30,16 @@ const appointment_create = [
   },
 ];
 
-const appointment_delete = (req, res) => {};
+const appointment_delete = async (req, res) => {
+  try {
+    await Appointment.delete(req.params.id);
+    return res
+      .status(200)
+      .json({ message: "Appointment deleted successfully." });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   appointment_list,

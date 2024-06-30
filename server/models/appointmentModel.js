@@ -15,4 +15,11 @@ const appointmentSchema = new Schema(
   { timestamps: true }
 );
 
+appointmentSchema.statics.delete = async function (id) {
+  const result = await this.findByIdAndDelete(id).exec();
+  if (!result) {
+    throw new Error("Appointment with provided ID does not exist");
+  }
+};
+
 module.exports = mongoose.model("Appointment", appointmentSchema);

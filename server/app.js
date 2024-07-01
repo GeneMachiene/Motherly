@@ -10,6 +10,7 @@ const userRoutes = require("./routes/user");
 const childRoutes = require("./routes/child");
 const apiRoutes = require("./routes/api");
 const locationRoutes = require("./routes/location");
+const appointmentRoutes = require("./routes/appointment");
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use("/user", userRoutes);
 app.use("/child", childRoutes);
 app.use("/api", apiRoutes);
 app.use("/locations", locationRoutes);
+app.use("/appointments", appointmentRoutes);
 
 module.exports = app;

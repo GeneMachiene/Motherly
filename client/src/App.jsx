@@ -17,8 +17,10 @@ import Barangays from "./pages/locations/Barangays";
 function App() {
   // const currentURI = window.location.href.split('/').at(-1);
   const currentURI = useLocation().pathname;
-
+  console.log(currentURI)
   const inAuth = currentURI == "/login" || currentURI == "/signup";
+  const inAdmin = currentURI.includes('dashboard');
+  console.log(inAdmin)
   const { user } = useAuthContext();
 
   return (
@@ -30,6 +32,11 @@ function App() {
             <Header />
           </div>
         )}
+        {inAdmin ? (
+          <div>Sidebar</div>
+        ) : (
+          <></>
+        )}
 
         <div
           className={
@@ -40,16 +47,16 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={!user? <Login /> : <Navigate to="/" replace={true} />} />
             <Route path='/aboutus' element={<AboutUs />}/>
             <Route path='/faqs' element={<FAQs />}/>
-            <Route path='/dashboard' element={<Dashboard />}/>
+            <Route path='/dashboard' element={user? <Dashboard /> : <Navigate to="/login" />}/>
             <Route path="/signup" element={!user ? <Register /> : <Navigate to="/" replace={true} />} />
             <Route path="/profile" element={user? <Profile /> : <Navigate to={"/login"} />} />
-            <Route path="/locations/regions" element={<Regions />} />
-            <Route path="/locations/provinces" element={<Provinces />} />
-            <Route path="/locations/cities" element={<Cities />} />
-            <Route path="/locations/barangays" element={<Barangays />} />
+            <Route path="dashboard/locations/regions" element={<Regions />} />
+            <Route path="dashboard/locations/provinces" element={<Provinces />} />
+            <Route path="dashboard/locations/cities" element={<Cities />} />
+            <Route path="dashboard/locations/barangays" element={<Barangays />} />
           </Routes>
         </div>
 

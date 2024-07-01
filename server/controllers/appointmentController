@@ -20,7 +20,7 @@ const appointment_create = [
     }
 
     try {
-      await Appointment.create(req.body);
+      await Appointment.add(req.body);
       return res
         .status(200)
         .json({ message: "Appointment added successfully" });

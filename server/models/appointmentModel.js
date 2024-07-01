@@ -11,9 +11,26 @@ const appointmentSchema = new Schema(
       enum: ["Pending", "Finished", "Cancelled"],
       default: "Pending",
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true }
 );
+
+appointmentSchema.statics.add = async function (appointment) {
+  const userExists = await mongoose
+    .model("User")
+    .findById(appointment.user)
+    .exec();
+  if (!userExists) {
+    throw Error("User with provided ID does not exist.");
+  }
+
+  this.create(appointment);
+};
 
 appointmentSchema.statics.delete = async function (id) {
   const result = await this.findByIdAndDelete(id).exec();

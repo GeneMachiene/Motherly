@@ -31,6 +31,11 @@ const validateAndSanitizeAppointment = () => {
       .withMessage(
         'Status must be one of ["Pending", "Finished", "Cancelled"]'
       ),
+    body("user")
+      .exists({ checkFalsy: true })
+      .withMessage("User is required")
+      .isMongoId()
+      .withMessage("User must be a valid MongoDB ID"),
   ];
 };
 

@@ -11,6 +11,11 @@ const appointmentSchema = new Schema(
       enum: ["Pending", "Finished", "Cancelled"],
       default: "Pending",
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true }
 );

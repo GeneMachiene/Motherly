@@ -20,6 +20,18 @@ const appointmentSchema = new Schema(
   { timestamps: true }
 );
 
+appointmentSchema.statics.add = async function (appointment) {
+  const userExists = await mongoose
+    .model("User")
+    .findById(appointment.user)
+    .exec();
+  if (!userExists) {
+    throw Error("User with provided ID does not exist.");
+  }
+
+  this.create(appointment);
+};
+
 appointmentSchema.statics.delete = async function (id) {
   const result = await this.findByIdAndDelete(id).exec();
   if (!result) {

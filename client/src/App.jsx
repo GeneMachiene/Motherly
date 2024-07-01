@@ -42,7 +42,7 @@ function App() {
           className={
             inAuth
               ? "row-span-12 min-w-0"
-              : "overflow-y-auto row-span-11 bg-gray-100"
+              : "overflow-y-scroll row-span-11 bg-gray-100"
           }
         >
           <Routes>

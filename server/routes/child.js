@@ -1,14 +1,17 @@
 const express = require('express')
 
 // controller functions
-const {createChild, getChildren} = require('../controllers/childController')
+const {createChild, getChildren, getChildrenWhereID} = require('../controllers/childController')
 
 const router = express.Router()
 
-// create route
+// create child
 router.post('/create', createChild)
 
-// create route
+// get all
 router.get('/all', getChildren)
+
+// get where id
+router.get('/:email', getChildrenWhereID)
 
 module.exports = router

@@ -8,7 +8,7 @@ function ProfileCard({image, name, role, bio, mother = false}) {
   }
 
   return (
-    <div onClick={show_detail} className="box-border flex flex-col w-full bg-slate-50 shadow-lg mb-3 p-3 rounded-md gap-3
+    <div onClick={show_detail} className="box-border flex flex-col w-full bg-slate-50 shadow-lg p-3 rounded-md gap-3
     hover:cursor-pointer hover:bg-purple-100 transition-colors">
 
       <div className={`flex items-center justify-between ${mother? "":"flex-row-reverse"}`}>

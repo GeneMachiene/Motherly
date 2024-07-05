@@ -17,10 +17,9 @@ import Barangays from "./pages/locations/Barangays";
 function App() {
   // const currentURI = window.location.href.split('/').at(-1);
   const currentURI = useLocation().pathname;
-  console.log(currentURI)
   const inAuth = currentURI == "/login" || currentURI == "/signup";
   const inAdmin = currentURI.includes('dashboard');
-  console.log(inAdmin)
+
   const { user } = useAuthContext();
 
   return (
@@ -50,17 +49,18 @@ function App() {
             <Route path='/aboutus' element={<AboutUs />}/>
             <Route path='/faqs' element={<FAQs />}/>
 
-            {/* 
-            Route protection
+            
+            {/* Route protection */}
 
             <Route path="/login" element={!user? <Login /> : <Navigate to="/" replace={true} />} />
             <Route path='/dashboard' element={user? <Dashboard /> : <Navigate to="/login" />}/>
             <Route path="/signup" element={!user ? <Register /> : <Navigate to="/" replace={true} />} />
-            <Route path="/profile" element={user? <Profile /> : <Navigate to={"/login"} />} /> */}
-            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={user? <Profile /> : <Navigate to={"/login"} />} />
+            
+            {/* <Route path="/login" element={<Login />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} /> */}
 
             {/* Location routes */}
             <Route path="dashboard/locations/regions" element={<Regions />} />

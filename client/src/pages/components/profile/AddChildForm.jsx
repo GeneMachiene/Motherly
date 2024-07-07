@@ -7,7 +7,7 @@ import ImageUpload from '../utility/ImageUpload';
 import dayjs from "dayjs";
 
 
-function AddChild({open, close}) {
+function AddChild({state, setState}) {
   const [error, setError] = useState()
   const [image, setImage] = useState(null)
 
@@ -23,13 +23,21 @@ function AddChild({open, close}) {
     e.preventDefault()
     
     await addChild({...child});
+
+    if(apierror){
+      console.log(apierror)
+    }
+    else{
+      setState(false);
+      window.location.reload();
+    }
   }
 
 
   return(
     <Modal
-      open={open}
-      onClose={close}
+      open={state}
+      onClose={()=>(setState(false))}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

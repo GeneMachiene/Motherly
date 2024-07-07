@@ -3,7 +3,7 @@ import {DatePicker, MobileDateTimePicker} from "@mui/x-date-pickers";
 import { useState } from "react";
 import dayjs from "dayjs";
 
-function AddAppointment({open, close}) {
+function AddAppointment({state, setState}) {
   const [error, setError] = useState()
   const [name, setName] = useState('')
   const [relationship, setRelationship] = useState('');
@@ -71,8 +71,8 @@ function AddAppointment({open, close}) {
 
   return(
     <Modal
-      open={open}
-      onClose={close}
+      open={state}
+      onClose={setState}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-grid-system';
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect, useState } from "react";
 import ProfileCard from "./components/profile/ProfileCard"
+import NoData from "./components/utility/NoData"
 import ChildCareIcon from '@mui/icons-material/ChildCare';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddAppointment from "./components/profile/AddAppointmentForm";
@@ -34,11 +35,6 @@ function Profile() {
     }
   }
 
-  const handleClose = () => {
-    setAddChildOpen(false);
-    setAddAppointmentOpen(false);
-  }
-
   const fabs = [
     {
       color: 'primary',
@@ -61,8 +57,8 @@ function Profile() {
   return (
     <>
 
-      <AddChild open={addChildOpen} close={handleClose}/>
-      <AddAppointment open={addAppointmentOpen} close={handleClose}/>
+      <AddChild state={addChildOpen} setState={setAddChildOpen}/>
+      <AddAppointment open={addAppointmentOpen} close={setAddAppointmentOpen}/>
 
       {fabs.map((fab, index) => (
         <Zoom
@@ -88,11 +84,7 @@ function Profile() {
       <Container>
         <Row align="start" justify="center">
           <Col>
-            <div className="flex justify-center my-3 font-semibold bg-slate-50 p-1 rounded-full shadow-md">
-              Information
-            </div>
-            
-            <div className="card w-full gap-y-7">
+            <div className="card w-full gap-y-7 my-3">
               <ProfileCard
                 onClick={() => {console.log("tite")}}
                 image={user ? `${import.meta.env.VITE_SERVER}/api/file/${user.image}`:""}
@@ -177,9 +169,12 @@ function FamilyProfile() {
 
   return(
     <div className="flex flex-col box-border w-full h-full gap-y-3 mb-6">
-      {data? 
-      
-        data.map((child)=>(
+      {data ? 
+        
+        data.length === 0 ?  
+        <NoData/>
+        :
+        data.toReversed().map((child)=>(
           <ProfileCard 
             key={child._id}
             image={`http://localhost:3000/api/file/${child.image}`}

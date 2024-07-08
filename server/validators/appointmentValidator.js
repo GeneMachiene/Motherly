@@ -9,12 +9,16 @@ const validateAndSanitizeAppointment = () => {
       .isISO8601()
       .withMessage("Must be a valid ISO 8601 date")
       .toDate()
-      .custom((value) => {
-        if (value <= Date.now()) {
-          throw new Error("The date must be in the future");
-        }
-        return true;
-      }),
+      // can't get this to work (doesn't compare time properly)
+      // .custom((value) => {
+      //   console.log('Date.now(): ', Date.now(), ' > ', Instant.parse( value ).toEpochMilli())
+
+      //   if (Instant.parse( value ).toEpochMilli() <= Date.now()) {
+      //     throw new Error("The date must be in the future");
+      //   }
+      //   return true;
+      // })
+      ,
     body("purpose")
       .exists({ checkFalsy: true })
       .withMessage("Purpose is required")

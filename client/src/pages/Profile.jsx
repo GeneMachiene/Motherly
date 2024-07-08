@@ -58,7 +58,7 @@ function Profile() {
     <>
 
       <AddChild state={addChildOpen} setState={setAddChildOpen}/>
-      <AddAppointment open={addAppointmentOpen} close={setAddAppointmentOpen}/>
+      <AddAppointment state={addAppointmentOpen} setState={setAddAppointmentOpen}/>
 
       {fabs.map((fab, index) => (
         <Zoom
@@ -172,7 +172,7 @@ function FamilyProfile() {
       {data ? 
         
         data.length === 0 ?  
-        <NoData/>
+        <NoData text={"Click on the floating button to add a family member."}/>
         :
         data.toReversed().map((child)=>(
           <ProfileCard 
@@ -193,7 +193,7 @@ function Appointments() {
 
   useEffect(() => {
     const fetchdata = async () => {
-      const response = await fetch(`${import.meta.env.VITE_SERVER}/child/all`)
+      const response = await fetch(`${import.meta.env.VITE_SERVER}/appointments/`)
       const json = await response.json()
       
       if (response.ok){
@@ -205,10 +205,13 @@ function Appointments() {
 
   return(
     <div className="flex flex-col box-border w-full h-full gap-y-3 mb-6">
-      {data? 
-      
-        data.map((child)=>(
-          <AppointmentCard key={child._id}/>
+      {data ? 
+        
+        data.length === 0 ?  
+        <NoData text={"Click on the floating button to add an appointment."}/>
+        :
+        data.toReversed().map((appointment)=>(
+          <AppointmentCard key={appointment._id}/>
         ))
         :
         <LinearProgress />

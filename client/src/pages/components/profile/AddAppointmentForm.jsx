@@ -1,83 +1,54 @@
-import { Modal, TextField, Box, Typography, FormControl, InputLabel, Select, MenuItem, Button, Alert } from "@mui/material";
+import { Modal, TextField, Box, Typography, FormControl, InputLabel, Select, MenuItem, Button, Alert, CircularProgress } from "@mui/material";
 import {DatePicker, MobileDateTimePicker} from "@mui/x-date-pickers";
-import { useState } from "react";
+import { useAddAppointment } from "../../../hooks/useAddAppointment"
+import { Appointment } from '../../../models/Appointment';
 import dayjs from "dayjs";
 
 function AddAppointment({state, setState}) {
-  const [error, setError] = useState()
-  const [name, setName] = useState('')
-  const [relationship, setRelationship] = useState('');
 
+  const { addAppointment, isLoading, error } = useAddAppointment();
+  const { appointment, handleAppointmentChange } = Appointment();
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: 1,
-    boxShadow: 24,
-    p: 4,
-    minWidth: 250,
-    alignItems: 'center'
-  };
-
-  const selectRelationship = (event) => {
-    setRelationship(event.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault()    
-    
-    const formData = new FormData();
-    formData.append('file', "image");
 
-      const imgResponse = await fetch(`${import.meta.env.VITE_SERVER}/api/upload`, {
-        method: 'POST',
-        body: formData,
-      });
+    await addAppointment({...appointment});
 
-      if (!imgResponse.ok) {
-        const errorText = await imgResponse.text();
-        throw new Error(`Error: ${imgResponse.status} - ${errorText}`);
-      }
-
-      const result = await imgResponse.json();
-      
-      const child = {"image":result, name, relationship}
-
-      const response = await fetch(`${import.meta.env.VITE_SERVER}/child/create`, {
-        method: 'POST',
-        body: JSON.stringify(child),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-
-      const json = await response.json()
-
-      if(!response.ok) {
-        console.log(json.error)
-      }
-
-      if(response.ok) {
-        console.log('Child added!')
-        window.location.reload()
-      }
+    if(error){
+      console.log(error) // this doesn't work for first time runs
+    }
+    else{
+      setState(false);
+      window.location.reload();
+    }
   }
 
 
   return(
     <Modal
       open={state}
-      onClose={setState}
+      onClose={()=>(setState(false))}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <form onSubmit={handleSubmit}>
-        <Box sx={style}>
+        <Box 
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: 1,
+            boxShadow: 24,
+            p: 4,
+            minWidth: 250,
+            alignItems: 'center'
+          }}
+        >
 
           <Typography id="modal-modal-title" variant="h6" component="h2">Schedule Appointment</Typography>
          
@@ -87,9 +58,10 @@ function AddAppointment({state, setState}) {
               required
               labelId="helper-text"
               id="appointment-select"
-              value={relationship}
+              name="patient"
+              value={appointment.patient == null ? '':appointment.patient}
               label="Appointment for:"
-              onChange={selectRelationship}
+              onChange={handleAppointmentChange}
             >
               <MenuItem value={"Mother"}>Mother</MenuItem>
               <MenuItem value={"Child"}>Child</MenuItem>
@@ -107,18 +79,19 @@ function AddAppointment({state, setState}) {
               mt:2,
             }}
           />
+
           <MobileDateTimePicker
             label="Appointment Date"
-            // onChange={(date) => handleUserChange({target: { name: "personal_information.birthdate", value: date }})}
-            defaultValue={dayjs()}
-            minDateTime={dayjs()}
+            onChange={(date) => handleAppointmentChange({target: { name: "datetime_of_appointment", value: date }})}
+            minDateTime={dayjs().add(1, 'day')}
+            value={appointment.birthdate == null? dayjs().add(1, 'day'):appointment.birthdate}
             sx={{
               width:"100%",
               mt:2,
             }}
             slotProps={{              
               field: {
-                name:"personal_information.birthdate",
+                name:"datetime_of_appointment",
               }
             }}
           />
@@ -130,13 +103,16 @@ function AddAppointment({state, setState}) {
             rows={3}
             margin="normal"
             label="Purpose"
-            value={name}
-            onChange={(e) => (setName(e.target.value))}
+            name="purpose"
+            value={appointment.purpose == null? '':appointment.purpose}
+            onChange={handleAppointmentChange}
           />
 
-          <Button fullWidth variant="contained" sx={{mt:5}} type="submit">Add</Button>
+          <Button fullWidth variant="contained" sx={{mt:5}} type="submit" disabled={isLoading}>
+            {isLoading?<CircularProgress size={15} sx={{p:1}}/>:'Add'}
+          </Button>
         
-          {error ? <Alert severity="error">{error}</Alert> : <></>}
+          {error ? <Alert severity="error">{error.msg}</Alert> : <></>}
         </Box>
       </form>
     </Modal>

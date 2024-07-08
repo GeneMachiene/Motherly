@@ -11,7 +11,12 @@ const appointmentSchema = new Schema(
       enum: ["Pending", "Finished", "Cancelled"],
       default: "Pending",
     },
-    user: {
+    patient: {
+      type: String,
+      required: true,
+      enum: ["Mother", "Child", "Partner"],
+    },
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -23,11 +28,12 @@ const appointmentSchema = new Schema(
 appointmentSchema.statics.add = async function (appointment) {
   const userExists = await mongoose
     .model("User")
-    .findById(appointment.user)
+    .findOne({ email: appointment.user_id })
     .exec();
   if (!userExists) {
     throw Error("User with provided ID does not exist.");
   }
+  appointment.user_id = userExists._id;
 
   this.create(appointment);
 };

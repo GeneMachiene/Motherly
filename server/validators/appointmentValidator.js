@@ -31,11 +31,17 @@ const validateAndSanitizeAppointment = () => {
       .withMessage(
         'Status must be one of ["Pending", "Finished", "Cancelled"]'
       ),
-    body("user")
+    body("patient")
+      .optional()
+      .isString()
+      .withMessage("Patient must be a string")
+      .isIn(["Mother", "Child", "Partner"])
+      .withMessage(
+        'Patient must be one of ["Mother", "Child", "Partner"]'
+      ),
+    body("user_id")
       .exists({ checkFalsy: true })
       .withMessage("User is required")
-      .isMongoId()
-      .withMessage("User must be a valid MongoDB ID"),
   ];
 };
 

@@ -179,7 +179,7 @@ function FamilyProfile() {
             key={child._id}
             image={`http://localhost:3000/api/file/${child.image}`}
             name={child.name}
-            role={child.relationship}
+            role={child.sex}
           />
         ))
         :
@@ -211,7 +211,7 @@ function Appointments() {
         <NoData text={"Click on the floating button to add an appointment."}/>
         :
         data.toReversed().map((appointment)=>(
-          <AppointmentCard key={appointment._id}/>
+          <AppointmentCard key={appointment._id} appointment={appointment}/>
         ))
         :
         <LinearProgress />
